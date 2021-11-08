@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 
-function Comidas() {
-  const [title] = useState('Comidas');
-  const [haveSearch] = useState(true);
+function Perfil() {
+  const [title] = useState('Perfil');
+  const [haveSearch] = useState(false);
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
-      <h1>Comidas</h1>
+      <h1>Página não encontrada :(</h1>
     </>
   );
 }
 
-export default Comidas;
+export default Perfil;
