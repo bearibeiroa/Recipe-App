@@ -14,7 +14,6 @@ function Provider({ children }) {
   // useEffect(() => { fetchPlanets(); }, []);
   const [searchType, setSearchType] = useState('ingrediente');
   const [inputValueSearch, setInputValueSearch] = useState('');
-  const [searchInputText, setSearchInputText] = useState('');
 
   async function searchRequest(type, inputValue) {
     let response = [];
@@ -47,8 +46,6 @@ function Provider({ children }) {
     inputValueSearch,
     setInputValueSearch,
     searchRequest,
-    searchInputText,
-    setSearchInputText,
   };
 
   return (

@@ -35,8 +35,14 @@ function App() {
           <Route exact path="/explorar" component={ Explorar } />
           <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
           <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
-          <Route path="/explorar/comidas/ingredientes" component={ IngredientesComidas } />
-          <Route path="/explorar/bebidas/ingredientes" component={ IngredientesBebidas } />
+          <Route
+            path="/explorar/comidas/ingredientes"
+            component={ IngredientesComidas }
+          />
+          <Route
+            path="/explorar/bebidas/ingredientes"
+            component={ IngredientesBebidas }
+          />
           <Route path="/explorar/comidas/area" component={ LocalComidas } />
           <Route path="/perfil" component={ Perfil } />
           <Route path="/receitas-feitas" component={ ReceitasFeitas } />
