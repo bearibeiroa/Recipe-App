@@ -43,19 +43,38 @@ function Header({ title, haveSearch }) {
         />
       )
         : null }
-        <label htmlFor="ingredient-search-radio">
-          Buscar por Ingredientes
-          <input type="radio" name="ingredient-search-radio" data-testid="ingredient-search-radio"/> 
-        </label>
-        <label htmlFor="name-search-radio">
-          Nome
-          <input type="radio" name="name-search-radio" data-testid="name-search-radio"/> 
-        </label>
-        <label htmlFor="first-letter-search-radio">
-          Nome
-          <input type="radio" name="first-letter-search-radio" data-testid="first-letter-search-radio"/> 
-        </label>
-        <button type="button" data-testid="exec-search-btn">Buscar</button>
+      <label htmlFor="ingredient-search-radio">
+        Buscar por Ingredientes
+        <input
+          type="radio"
+          name="ingredient-search-radio"
+          data-testid="ingredient-search-radio"
+        />
+      </label>
+      <label htmlFor="name-search-radio">
+        Nome
+        <input
+          type="radio"
+          name="name-search-radio"
+          data-testid="name-search-radio"
+        />
+      </label>
+      <label
+        htmlFor="first-letter-search-radio"
+      >
+        Nome
+        <input
+          type="radio"
+          name="first-letter-search-radio"
+          data-testid="first-letter-search-radio"
+        />
+      </label>
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+      >
+        Buscar
+      </button>
     </header>
   );
 }
