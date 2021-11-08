@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header({ title, haveSearch }) {
   const [showSearch, setShowSearch] = useState(false);
@@ -35,46 +36,19 @@ function Header({ title, haveSearch }) {
         </button>
       )
         : null }
-      { showSearch ? (
-        <input
-          data-testid="search-input"
-          value={ searchText }
-          onChange={ setSearchText }
-        />
+      {showSearch ? (
+        <>
+          <input
+            data-testid="search-input"
+            value={ searchText }
+            onChange={ ({ target }) => {
+              setSearchText(target.value);
+            } }
+          />
+          <SearchBar searchText={ searchText } />
+        </>
       )
         : null }
-      <label htmlFor="ingredient-search-radio">
-        Buscar por Ingredientes
-        <input
-          type="radio"
-          name="ingredient-search-radio"
-          data-testid="ingredient-search-radio"
-        />
-      </label>
-      <label htmlFor="name-search-radio">
-        Nome
-        <input
-          type="radio"
-          name="name-search-radio"
-          data-testid="name-search-radio"
-        />
-      </label>
-      <label
-        htmlFor="first-letter-search-radio"
-      >
-        Nome
-        <input
-          type="radio"
-          name="first-letter-search-radio"
-          data-testid="first-letter-search-radio"
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-      >
-        Buscar
-      </button>
     </header>
   );
 }
