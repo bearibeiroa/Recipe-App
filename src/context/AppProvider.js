@@ -7,6 +7,7 @@ function Provider({ children }) {
   const [inputValueSearch, setInputValueSearch] = useState('');
   const [resultsFoodApi, setResultsFoodApi] = useState([]);
   const [resultsDrinkApi, setResultsDrinkApi] = useState([]);
+  const [isFetch, setIsFetch] = useState(false);
 
   async function searchFoodRequest(type, inputValue) {
     let response = [];
@@ -14,12 +15,14 @@ function Provider({ children }) {
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputValue}`);
       const result = await response.json();
       setResultsFoodApi(result.meals);
+      setIsFetch(true);
       return result.meals;
     }
     if (type === 'nome') {
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`);
       const result = await response.json();
       setResultsFoodApi(result.meals);
+      setIsFetch(true);
       return result.meals;
     }
     if (type === 'primeira letra') {
@@ -29,6 +32,7 @@ function Provider({ children }) {
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputValue}`);
       const result = await response.json();
       setResultsFoodApi(result.meals);
+      setIsFetch(true);
       return result.meals;
     }
   }
@@ -39,12 +43,14 @@ function Provider({ children }) {
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`);
       const result = await response.json();
       setResultsDrinkApi(result.drinks);
+      setIsFetch(true);
       return result.drinks;
     }
     if (type === 'nome') {
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`);
       const result = await response.json();
       setResultsDrinkApi(result.drinks);
+      setIsFetch(true);
       return result.drinks;
     }
     if (type === 'primeira letra') {
@@ -54,6 +60,7 @@ function Provider({ children }) {
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputValue}`);
       const result = await response.json();
       setResultsDrinkApi(result.drinks);
+      setIsFetch(true);
       return result.drinks;
     }
   }
@@ -69,6 +76,7 @@ function Provider({ children }) {
     setResultsFoodApi,
     resultsDrinkApi,
     setResultsDrinkApi,
+    isFetch,
   };
 
   return (
