@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Explorar() {
@@ -9,6 +10,7 @@ function Explorar() {
     <>
       <Header title={ title } haveSearch={ haveSearch } />
       <h1>Página não encontrada :(</h1>
+      <Footer />
     </>
   );
 }
