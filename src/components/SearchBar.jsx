@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import AppContext from '../context/AppContext';
 
@@ -6,8 +7,20 @@ function SearchBar({ searchText }) {
   const {
     searchType,
     setSearchType,
-    searchRequest,
+    searchFoodRequest,
+    searchDrinksRequest,
   } = useContext(AppContext);
+
+  const history = useHistory();
+
+  function handleClickAPI() {
+    if (history.location.pathname === '/comidas') {
+      searchFoodRequest(searchType, searchText);
+    }
+    if (history.location.pathname === '/bebidas') {
+      searchDrinksRequest(searchType, searchText);
+    }
+  }
 
   return (
     <>
@@ -47,7 +60,7 @@ function SearchBar({ searchText }) {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ () => searchRequest(searchType, searchText) }
+        onClick={ handleClickAPI }
       >
         Buscar
       </button>
