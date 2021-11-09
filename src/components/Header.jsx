@@ -41,9 +41,7 @@ function Header({ title, haveSearch }) {
           <input
             data-testid="search-input"
             value={ searchText }
-            onChange={ ({ target }) => {
-              setSearchText(target.value);
-            } }
+            onChange={ ({ target }) => setSearchText(target.value) }
           />
           <SearchBar searchText={ searchText } />
         </>

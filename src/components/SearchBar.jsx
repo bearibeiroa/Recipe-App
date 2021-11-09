@@ -13,12 +13,41 @@ function SearchBar({ searchText }) {
 
   const history = useHistory();
 
-  function handleClickAPI() {
+  function oneRedirectionResult(result) {
+    switch (history.location.pathname) {
+    case '/comidas':
+      if (result.length === 1) {
+        history.push(`/comidas/${result[0].idMeal}`);
+      }
+      break;
+    case '/bebidas':
+      if (result.length === 1) {
+        history.push(`/bebidas/${result[0].idDrink}`);
+      }
+      break;
+    default:
+      break;
+    }
+  }
+
+  async function handleClickAPI() {
     if (history.location.pathname === '/comidas') {
-      searchFoodRequest(searchType, searchText);
+      const meals = await searchFoodRequest(searchType, searchText);
+      if (!meals) {
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+      if (meals) {
+        oneRedirectionResult(meals);
+      }
     }
     if (history.location.pathname === '/bebidas') {
-      searchDrinksRequest(searchType, searchText);
+      const drinks = await searchDrinksRequest(searchType, searchText);
+      if (!drinks) {
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+      if (drinks) {
+        oneRedirectionResult(drinks);
+      }
     }
   }
 
