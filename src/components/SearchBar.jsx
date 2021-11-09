@@ -9,30 +9,36 @@ function SearchBar({ searchText }) {
     setSearchType,
     searchFoodRequest,
     searchDrinksRequest,
-    resultsFoodApi,
-    resultsDrinkApi,
   } = useContext(AppContext);
 
   const history = useHistory();
 
-  function oneRedirectionResult() {
-    if (resultsFoodApi.length === 1) {
-      history.push(`/comidas/${resultsFoodApi[0].idMeal}`);
-    }
-
-    if (resultsDrinkApi.length === 1) {
-      history.push(`/bebidas/${resultsDrinkApi[0].idDrink}`);
+  function oneRedirectionResult(result) {
+    switch (history.location.pathname) {
+    case '/comidas':
+      if (result.length === 1) {
+        history.push(`/comidas/${result[0].idMeal}`);
+      }
+      break;
+    case '/bebidas':
+      if (result.length === 1) {
+        history.push(`/bebidas/${result[0].idDrink}`);
+      }
+      break;
+    default:
+      break;
     }
   }
 
-  function handleClickAPI() {
+  async function handleClickAPI() {
     if (history.location.pathname === '/comidas') {
-      searchFoodRequest(searchType, searchText);
+      const meals = await searchFoodRequest(searchType, searchText);
+      oneRedirectionResult(meals);
     }
     if (history.location.pathname === '/bebidas') {
-      searchDrinksRequest(searchType, searchText);
+      const drinks = await searchDrinksRequest(searchType, searchText);
+      oneRedirectionResult(drinks);
     }
-    oneRedirectionResult();
   }
 
   return (

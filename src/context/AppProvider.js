@@ -13,14 +13,14 @@ function Provider({ children }) {
     if (type === 'ingrediente') {
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputValue}`);
       const result = await response.json();
-      setResultsFoodApi(result);
-      return result;
+      setResultsFoodApi(result.meals);
+      return result.meals;
     }
     if (type === 'nome') {
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`);
       const result = await response.json();
-      setResultsFoodApi(result);
-      return result;
+      setResultsFoodApi(result.meals);
+      return result.meals;
     }
     if (type === 'primeira letra') {
       if (inputValue.length !== 1) {
@@ -28,8 +28,8 @@ function Provider({ children }) {
       }
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputValue}`);
       const result = await response.json();
-      setResultsFoodApi(result);
-      return result;
+      setResultsFoodApi(result.meals);
+      return result.meals;
     }
   }
 
@@ -38,16 +38,14 @@ function Provider({ children }) {
     if (type === 'ingrediente') {
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`);
       const result = await response.json();
-      setResultsDrinkApi(result);
-      console.log(result);
-      return result;
+      setResultsDrinkApi(result.drinks);
+      return result.drinks;
     }
     if (type === 'nome') {
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`);
       const result = await response.json();
-      setResultsDrinkApi(result);
-      console.log(result);
-      return result;
+      setResultsDrinkApi(result.drinks);
+      return result.drinks;
     }
     if (type === 'primeira letra') {
       if (inputValue.length !== 1) {
@@ -55,9 +53,8 @@ function Provider({ children }) {
       }
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputValue}`);
       const result = await response.json();
-      setResultsDrinkApi(result);
-      console.log(result);
-      return result;
+      setResultsDrinkApi(result.drinks);
+      return result.drinks;
     }
   }
 
