@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import FilterButtons from '../components/FilterButtons';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
@@ -41,7 +42,8 @@ function Bebidas() {
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
-      { isFetch ? mapRecipeCards() : null }
+      <FilterButtons />
+      {isFetch ? mapRecipeCards() : null}
       <Footer />
     </>
   );

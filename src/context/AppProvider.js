@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
@@ -8,6 +9,8 @@ function Provider({ children }) {
   const [resultsFoodApi, setResultsFoodApi] = useState([]);
   const [resultsDrinkApi, setResultsDrinkApi] = useState([]);
   const [isFetch, setIsFetch] = useState(false);
+  const [categoryFoodButton, setCategoryFoodButton] = useState([]);
+  const [categoryDrinkButton, setCategoryDrinkButton] = useState([]);
 
   async function searchFoodRequest(type, inputValue) {
     let response = [];
@@ -79,6 +82,30 @@ function Provider({ children }) {
     fetchRequest();
   }, []);
 
+  const history = useHistory();
+
+  async function fetchCategoryButton() {
+    switch (history.location.pathname) {
+    case '/comidas':
+      const buttonFoodResponse = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+      const buttonFoodResult = await buttonFoodResponse.json();
+      setCategoryFoodButton(buttonFoodResult.meals);
+      console.log('qlqr coisa');
+      break;
+    case '/bebidas':
+      const buttonDrinkResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+      const buttonDrinkResult = await buttonDrinkResponse.json();
+      setCategoryDrinkButton(buttonDrinkResult.drinks);
+      break;
+    default:
+      break;
+    }
+  }
+
+  useEffect(() => {
+    fetchCategoryButton();
+  }, []);
+
   const context = {
     searchType,
     setSearchType,
@@ -91,6 +118,10 @@ function Provider({ children }) {
     resultsDrinkApi,
     setResultsDrinkApi,
     isFetch,
+    categoryFoodButton,
+    setCategoryFoodButton,
+    categoryDrinkButton,
+    setCategoryDrinkButton,
   };
 
   return (

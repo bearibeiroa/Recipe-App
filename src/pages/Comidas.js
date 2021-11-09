@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import FilterButtons from '../components/FilterButtons';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
@@ -36,6 +37,7 @@ function Comidas() {
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
+      <FilterButtons />
       { isFetch ? mapRecipeCards() : null }
       <Footer />
     </>
