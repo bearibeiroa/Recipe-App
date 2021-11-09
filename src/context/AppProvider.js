@@ -85,16 +85,16 @@ function Provider({ children }) {
   const history = useHistory();
 
   async function fetchCategoryButton() {
+    const buttonFoodResponse = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    const buttonFoodResult = await buttonFoodResponse.json();
+    const buttonDrinkResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+    const buttonDrinkResult = await buttonDrinkResponse.json();
+
     switch (history.location.pathname) {
     case '/comidas':
-      const buttonFoodResponse = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
-      const buttonFoodResult = await buttonFoodResponse.json();
       setCategoryFoodButton(buttonFoodResult.meals);
-      console.log('qlqr coisa');
       break;
     case '/bebidas':
-      const buttonDrinkResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-      const buttonDrinkResult = await buttonDrinkResponse.json();
       setCategoryDrinkButton(buttonDrinkResult.drinks);
       break;
     default:
