@@ -33,11 +33,21 @@ function SearchBar({ searchText }) {
   async function handleClickAPI() {
     if (history.location.pathname === '/comidas') {
       const meals = await searchFoodRequest(searchType, searchText);
-      oneRedirectionResult(meals);
+      if (!meals) {
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+      if (meals) {
+        oneRedirectionResult(meals);
+      }
     }
     if (history.location.pathname === '/bebidas') {
       const drinks = await searchDrinksRequest(searchType, searchText);
-      oneRedirectionResult(drinks);
+      if (!drinks) {
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+      if (drinks) {
+        oneRedirectionResult(drinks);
+      }
     }
   }
 

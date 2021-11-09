@@ -10,23 +10,25 @@ function Comidas() {
 
   function mapRecipeCards() {
     const TWELVE = 12;
-    if (resultsFoodApi.length > 1 && resultsFoodApi.length > TWELVE) {
-      const limitedArray = resultsFoodApi;
-      limitedArray.splice(TWELVE);
-      return limitedArray.map(
-        (result, index) => <RecipeCard key={ index } index={ index } info={ result } />,
-      );
-    }
-    if (resultsFoodApi.length > 1 && resultsFoodApi.length <= TWELVE) {
-      return resultsFoodApi.map(
-        (result, index) => (
-          <RecipeCard
-            key={ index }
-            info={ result }
-            index={ index }
-          />
-        ),
-      );
+    if (resultsFoodApi) {
+      if (resultsFoodApi.length > 1 && resultsFoodApi.length > TWELVE) {
+        const limitedArray = resultsFoodApi;
+        limitedArray.splice(TWELVE);
+        return limitedArray.map(
+          (result, index) => <RecipeCard key={ index } index={ index } info={ result } />,
+        );
+      }
+      if (resultsFoodApi.length > 1 && resultsFoodApi.length <= TWELVE) {
+        return resultsFoodApi.map(
+          (result, index) => (
+            <RecipeCard
+              key={ index }
+              info={ result }
+              index={ index }
+            />
+          ),
+        );
+      }
     }
   }
 

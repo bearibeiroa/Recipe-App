@@ -10,28 +10,30 @@ function Bebidas() {
 
   function mapRecipeCards() {
     const TWELVE = 12;
-    if (resultsDrinkApi.length > 1 && resultsDrinkApi.length > TWELVE) {
-      const limitedArray = resultsDrinkApi;
-      limitedArray.splice(TWELVE);
-      return limitedArray.map(
-        (result, index) => (
-          <RecipeCard
-            key={ index }
-            info={ result }
-            index={ index }
-          />),
-      );
-    }
-    if (resultsDrinkApi.length > 1 && resultsDrinkApi.length <= TWELVE) {
-      return resultsDrinkApi.map(
-        (result, index) => (
-          <RecipeCard
-            key={ index }
-            data-testid={ `${index}-recipe-card` }
-            index={ index }
-          />
-        ),
-      );
+    if (resultsDrinkApi) {
+      if (resultsDrinkApi.length > 1 && resultsDrinkApi.length > TWELVE) {
+        const limitedArray = resultsDrinkApi;
+        limitedArray.splice(TWELVE);
+        return limitedArray.map(
+          (result, index) => (
+            <RecipeCard
+              key={ index }
+              info={ result }
+              index={ index }
+            />),
+        );
+      }
+      if (resultsDrinkApi.length > 1 && resultsDrinkApi.length <= TWELVE) {
+        return resultsDrinkApi.map(
+          (result, index) => (
+            <RecipeCard
+              key={ index }
+              index={ index }
+              info={ result }
+            />
+          ),
+        );
+      }
     }
   }
 
