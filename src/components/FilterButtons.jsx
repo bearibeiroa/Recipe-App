@@ -7,7 +7,7 @@ function FilterButtons() {
   function filterCategoryFiveBtn() {
     console.log('outra coisa');
     const FIVE = 5;
-    if (categoryFoodButton.length > FIVE) {
+    if (categoryFoodButton.length >= FIVE) {
       const limitedFoodArray = categoryFoodButton;
       limitedFoodArray.splice(FIVE);
       return limitedFoodArray.map((food, index) => (
@@ -20,7 +20,7 @@ function FilterButtons() {
         </button>
       ));
     }
-    if (categoryDrinkButton.length > FIVE) {
+    if (categoryDrinkButton.length >= FIVE) {
       const limitedDrinkArray = categoryDrinkButton;
       limitedDrinkArray.splice(FIVE);
       return limitedDrinkArray.map((drinks, index) => (
