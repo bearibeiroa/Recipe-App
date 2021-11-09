@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
 import AppContext from '../context/AppContext';
@@ -41,6 +42,7 @@ function Bebidas() {
     <>
       <Header title={ title } haveSearch={ haveSearch } />
       { isFetch ? mapRecipeCards() : null }
+      <Footer />
     </>
   );
 }
