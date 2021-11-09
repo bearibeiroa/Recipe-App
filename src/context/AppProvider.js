@@ -3,31 +3,27 @@ import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
-  // async function fetchPlanets() {
-  //   const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-  //   const planets = await response.json();
-  //   setData(planets.results);
-  //   setBackup(planets.results);
-  //   setIsFetch(true);
-  // }
-
-  // useEffect(() => { fetchPlanets(); }, []);
   const [searchType, setSearchType] = useState('ingrediente');
   const [inputValueSearch, setInputValueSearch] = useState('');
+  const [resultsFoodApi, setResultsFoodApi] = useState([]);
+  const [resultsDrinkApi, setResultsDrinkApi] = useState([]);
+  const [isFetch, setIsFetch] = useState(false);
 
   async function searchFoodRequest(type, inputValue) {
     let response = [];
     if (type === 'ingrediente') {
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputValue}`);
       const result = await response.json();
-      console.log(result);
-      return result;
+      setResultsFoodApi(result.meals);
+      setIsFetch(true);
+      return result.meals;
     }
     if (type === 'nome') {
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`);
       const result = await response.json();
-      console.log(result);
-      return result;
+      setResultsFoodApi(result.meals);
+      setIsFetch(true);
+      return result.meals;
     }
     if (type === 'primeira letra') {
       if (inputValue.length !== 1) {
@@ -35,8 +31,9 @@ function Provider({ children }) {
       }
       response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputValue}`);
       const result = await response.json();
-      console.log(result);
-      return result;
+      setResultsFoodApi(result.meals);
+      setIsFetch(true);
+      return result.meals;
     }
   }
 
@@ -45,14 +42,16 @@ function Provider({ children }) {
     if (type === 'ingrediente') {
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`);
       const result = await response.json();
-      console.log(result);
-      return result;
+      setResultsDrinkApi(result.drinks);
+      setIsFetch(true);
+      return result.drinks;
     }
     if (type === 'nome') {
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`);
       const result = await response.json();
-      console.log(result);
-      return result;
+      setResultsDrinkApi(result.drinks);
+      setIsFetch(true);
+      return result.drinks;
     }
     if (type === 'primeira letra') {
       if (inputValue.length !== 1) {
@@ -60,8 +59,9 @@ function Provider({ children }) {
       }
       response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputValue}`);
       const result = await response.json();
-      console.log(result);
-      return result;
+      setResultsDrinkApi(result.drinks);
+      setIsFetch(true);
+      return result.drinks;
     }
   }
 
@@ -72,6 +72,11 @@ function Provider({ children }) {
     setInputValueSearch,
     searchFoodRequest,
     searchDrinksRequest,
+    resultsFoodApi,
+    setResultsFoodApi,
+    resultsDrinkApi,
+    setResultsDrinkApi,
+    isFetch,
   };
 
   return (
