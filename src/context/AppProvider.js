@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
@@ -64,6 +64,20 @@ function Provider({ children }) {
       return result.drinks;
     }
   }
+
+  async function fetchRequest() {
+    const drinkResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const drinkResult = await drinkResponse.json();
+    setResultsDrinkApi(drinkResult.drinks);
+    const foodResponse = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const foodResult = await foodResponse.json();
+    setResultsFoodApi(foodResult.meals);
+    setIsFetch(true);
+  }
+
+  useEffect(() => {
+    fetchRequest();
+  }, []);
 
   const context = {
     searchType,
