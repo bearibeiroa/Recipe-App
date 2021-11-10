@@ -8,7 +8,7 @@ import AppContext from '../context/AppContext';
 function Bebidas() {
   const [title] = useState('Bebidas');
   const [haveSearch] = useState(true);
-  const { resultsDrinkApi, isFetch } = useContext(AppContext);
+  const { resultsDrinkApi, isFetch, filterCategoryDrink } = useContext(AppContext);
 
   function mapRecipeCards() {
     const TWELVE = 12;
@@ -35,6 +35,15 @@ function Bebidas() {
             />
           ),
         );
+      }
+      if (filterCategoryDrink) {
+        return filterCategoryDrink.map((categorieResult, index) => (
+          <RecipeCard
+            key={ index }
+            info={ categorieResult }
+            index={ index }
+          />
+        ));
       }
     }
   }

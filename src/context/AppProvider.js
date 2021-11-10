@@ -134,7 +134,6 @@ function Provider({ children }) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`);
     const jsonDrinkResponse = await filterDrinkResponse.json();
     const resultDrinks = jsonDrinkResponse.drinks;
-
     const TWELVE = 12;
     const ONE = 1;
     if (resultDrinks) {
