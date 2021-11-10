@@ -8,13 +8,13 @@ import AppContext from '../context/AppContext';
 function Bebidas() {
   const [title] = useState('Bebidas');
   const [haveSearch] = useState(true);
-  const { resultsDrinkApi, isFetch,
+  const { resultsDrinkApi, toggle,
     filterCategoryDrink,
     btnFilterCategoryDrinks } = useContext(AppContext);
 
   function mapRecipeCards() {
     const TWELVE = 12;
-    if (resultsDrinkApi && btnFilterCategoryDrinks) {
+    if (resultsDrinkApi) {
       if (resultsDrinkApi.length > 1 && resultsDrinkApi.length > TWELVE) {
         const limitedArray = resultsDrinkApi;
         limitedArray.splice(TWELVE);
@@ -39,6 +39,8 @@ function Bebidas() {
         );
       }
     }
+  }
+  function filterCategoryDrinkCards() {
     if (filterCategoryDrink && !btnFilterCategoryDrinks) {
       return filterCategoryDrink.map((categorieResult, index) => (
         <RecipeCard
@@ -49,12 +51,11 @@ function Bebidas() {
       ));
     }
   }
-
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
       <FilterButtons />
-      {isFetch ? mapRecipeCards() : null}
+      {toggle ? filterCategoryDrinkCards() : mapRecipeCards() }
       <Footer />
     </>
   );

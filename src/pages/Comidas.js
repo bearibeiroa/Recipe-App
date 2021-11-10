@@ -8,13 +8,13 @@ import AppContext from '../context/AppContext';
 function Comidas() {
   const [title] = useState('Comidas');
   const [haveSearch] = useState(true);
-  const { resultsFoodApi, isFetch,
-    filterCategoryFood, btnFilterCategory } = useContext(AppContext);
+  const { resultsFoodApi,
+    filterCategoryFood, btnFilterCategory, toggle } = useContext(AppContext);
 
   function mapRecipeCards() {
     const TWELVE = 12;
-    if (resultsFoodApi && btnFilterCategory) {
-      if (resultsFoodApi.length > 1 && resultsFoodApi.length > TWELVE) {
+    if (resultsFoodApi) {
+      if (resultsFoodApi.length > 1 && resultsFoodApi.length >= TWELVE) {
         const limitedArray = resultsFoodApi;
         limitedArray.splice(TWELVE);
         return limitedArray.map(
@@ -33,6 +33,9 @@ function Comidas() {
         );
       }
     }
+  }
+
+  function filterCategoryFoodCards() {
     if (filterCategoryFood && !btnFilterCategory) {
       return filterCategoryFood.map((categorieResult, index) => (
         <RecipeCard
@@ -48,7 +51,7 @@ function Comidas() {
     <>
       <Header title={ title } haveSearch={ haveSearch } />
       <FilterButtons />
-      { isFetch ? mapRecipeCards() : null }
+      {toggle ? filterCategoryFoodCards() : mapRecipeCards() }
       <Footer />
     </>
   );

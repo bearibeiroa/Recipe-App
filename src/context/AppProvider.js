@@ -15,6 +15,7 @@ function Provider({ children }) {
   const [filterCategoryDrink, setFilterCategoryDrink] = useState([]);
   const [btnFilterCategory, setBtnFilterCategory] = useState(true);
   const [btnFilterCategoryDrinks, setBtnFilterCategoryDrinks] = useState(true);
+  const [toggle, setToggle] = useState(false);
 
   async function searchFoodRequest(type, inputValue) {
     let response = [];
@@ -113,6 +114,11 @@ function Provider({ children }) {
   async function fetchFilterFoodByCategorie(categorie) {
     const filterFoodResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorie}`);
     const jsonFoodResponse = await filterFoodResponse.json();
+    if (toggle) {
+      setToggle(false);
+    } else if (!toggle) {
+      setToggle(true);
+    }
     const resultFood = jsonFoodResponse.meals;
     const TWELVE = 12;
     const ONE = 1;
@@ -133,6 +139,11 @@ function Provider({ children }) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`);
     console.log(filterDrinkResponse);
     const jsonDrinkResponse = await filterDrinkResponse.json();
+    if (toggle) {
+      setToggle(false);
+    } else if (!toggle) {
+      setToggle(true);
+    }
     const resultDrinks = jsonDrinkResponse.drinks;
     const TWELVE = 12;
     const ONE = 1;
@@ -175,6 +186,7 @@ function Provider({ children }) {
     setBtnFilterCategory,
     btnFilterCategoryDrinks,
     setBtnFilterCategoryDrinks,
+    toggle,
   };
 
   return (
