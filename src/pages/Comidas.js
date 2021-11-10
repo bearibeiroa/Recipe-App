@@ -8,11 +8,12 @@ import AppContext from '../context/AppContext';
 function Comidas() {
   const [title] = useState('Comidas');
   const [haveSearch] = useState(true);
-  const { resultsFoodApi, isFetch, filterCategoryFood } = useContext(AppContext);
+  const { resultsFoodApi, isFetch,
+    filterCategoryFood, btnFilterCategory } = useContext(AppContext);
 
   function mapRecipeCards() {
     const TWELVE = 12;
-    if (resultsFoodApi) {
+    if (resultsFoodApi && btnFilterCategory) {
       if (resultsFoodApi.length > 1 && resultsFoodApi.length > TWELVE) {
         const limitedArray = resultsFoodApi;
         limitedArray.splice(TWELVE);
@@ -31,16 +32,15 @@ function Comidas() {
           ),
         );
       }
-
-      if (filterCategoryFood) {
-        return filterCategoryFood.map((categorieResult, index) => (
-          <RecipeCard
-            key={ index }
-            info={ categorieResult }
-            index={ index }
-          />
-        ));
-      }
+    }
+    if (filterCategoryFood && !btnFilterCategory) {
+      return filterCategoryFood.map((categorieResult, index) => (
+        <RecipeCard
+          key={ index }
+          info={ categorieResult }
+          index={ index }
+        />
+      ));
     }
   }
 
