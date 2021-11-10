@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function IngredientesComidas() {
@@ -8,6 +9,7 @@ function IngredientesComidas() {
     <>
       <Header title={ title } haveSearch={ haveSearch } />
       <h1>Página não encontrada :(</h1>
+      <Footer />
     </>
   );
 }
