@@ -9,11 +9,12 @@ function Bebidas() {
   const [title] = useState('Bebidas');
   const [haveSearch] = useState(true);
   const { resultsDrinkApi, isFetch,
-    filterCategoryDrink, btnFilterCategory } = useContext(AppContext);
+    filterCategoryDrink,
+    btnFilterCategoryDrinks } = useContext(AppContext);
 
   function mapRecipeCards() {
     const TWELVE = 12;
-    if (resultsDrinkApi && btnFilterCategory) {
+    if (resultsDrinkApi && btnFilterCategoryDrinks) {
       if (resultsDrinkApi.length > 1 && resultsDrinkApi.length > TWELVE) {
         const limitedArray = resultsDrinkApi;
         limitedArray.splice(TWELVE);
@@ -38,7 +39,7 @@ function Bebidas() {
         );
       }
     }
-    if (filterCategoryDrink && !btnFilterCategory) {
+    if (filterCategoryDrink && !btnFilterCategoryDrinks) {
       return filterCategoryDrink.map((categorieResult, index) => (
         <RecipeCard
           key={ index }

@@ -14,6 +14,7 @@ function Provider({ children }) {
   const [filterCategoryFood, setFilterCategoryFood] = useState([]);
   const [filterCategoryDrink, setFilterCategoryDrink] = useState([]);
   const [btnFilterCategory, setBtnFilterCategory] = useState(true);
+  const [btnFilterCategoryDrinks, setBtnFilterCategoryDrinks] = useState(true);
 
   async function searchFoodRequest(type, inputValue) {
     let response = [];
@@ -147,7 +148,7 @@ function Provider({ children }) {
       } else {
         setFilterCategoryDrink(resultDrinks);
       }
-      setBtnFilterCategory(false);
+      setBtnFilterCategoryDrinks(false);
     }
   }
 
@@ -179,6 +180,8 @@ function Provider({ children }) {
     fetchFilterDrinkByCategorie,
     btnFilterCategory,
     setBtnFilterCategory,
+    btnFilterCategoryDrinks,
+    setBtnFilterCategoryDrinks,
   };
 
   return (
