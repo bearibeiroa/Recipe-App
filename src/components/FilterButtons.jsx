@@ -2,10 +2,15 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 function FilterButtons() {
-  const { categoryFoodButton, categoryDrinkButton, isFetch } = useContext(AppContext);
+  const {
+    categoryFoodButton,
+    categoryDrinkButton,
+    isFetch,
+    fetchFilterFoodByCategorie,
+    fetchFilterDrinkByCategorie,
+  } = useContext(AppContext);
 
   function filterCategoryFiveBtn() {
-    console.log('outra coisa');
     const FIVE = 5;
     if (categoryFoodButton.length >= FIVE) {
       const limitedFoodArray = categoryFoodButton;
@@ -15,6 +20,7 @@ function FilterButtons() {
           data-testid={ `${food.strCategory}-category-filter` }
           key={ index }
           type="button"
+          onClick={ () => fetchFilterFoodByCategorie(food.strCategory) }
         >
           {food.strCategory}
         </button>
@@ -28,6 +34,7 @@ function FilterButtons() {
           data-testid={ `${drinks.strCategory}-category-filter` }
           key={ index }
           type="button"
+          onClick={ () => fetchFilterDrinkByCategorie(drinks.strCategory) }
         >
           {drinks.strCategory}
         </button>

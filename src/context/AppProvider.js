@@ -11,6 +11,8 @@ function Provider({ children }) {
   const [isFetch, setIsFetch] = useState(false);
   const [categoryFoodButton, setCategoryFoodButton] = useState([]);
   const [categoryDrinkButton, setCategoryDrinkButton] = useState([]);
+  const [filterCategoryFood, setFilterCategoryFood] = useState([]);
+  const [filterCategoryDrink, setFilterCategoryDrink] = useState([]);
 
   async function searchFoodRequest(type, inputValue) {
     let response = [];
@@ -106,6 +108,51 @@ function Provider({ children }) {
     fetchCategoryButton();
   }, []);
 
+  async function fetchFilterFoodByCategorie(categorie) {
+    const filterFoodResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categorie}`);
+    const jsonFoodResponse = await filterFoodResponse.json();
+    const resultFood = jsonFoodResponse.meals;
+    const TWELVE = 12;
+    const ONE = 1;
+    if (resultFood) {
+      if (resultFood.length > ONE && resultFood.length >= TWELVE) {
+        const finalFoodFilterCategory = resultFood;
+        finalFoodFilterCategory.splice(TWELVE);
+        setFilterCategoryFood(finalFoodFilterCategory);
+      } else {
+        setFilterCategoryFood(resultFood);
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchFilterFoodByCategorie();
+  }, []);
+
+  async function fetchFilterDrinkByCategorie(categorie) {
+    const filterDrinkResponse = await
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`);
+    const jsonDrinkResponse = await filterDrinkResponse.json();
+    const resultDrinks = jsonDrinkResponse.drinks;
+
+    const TWELVE = 12;
+    const ONE = 1;
+    if (resultDrinks) {
+      if (resultDrinks.length > ONE && resultDrinks.length >= TWELVE) {
+        const finalDrinkFilterCategory = resultDrinks;
+        finalDrinkFilterCategory.splice(TWELVE);
+        setFilterCategoryDrink();
+        setFilterCategoryDrink(finalDrinkFilterCategory);
+      } else {
+        setFilterCategoryDrink(resultDrinks);
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchFilterDrinkByCategorie();
+  }, []);
+
   const context = {
     searchType,
     setSearchType,
@@ -122,6 +169,12 @@ function Provider({ children }) {
     setCategoryFoodButton,
     categoryDrinkButton,
     setCategoryDrinkButton,
+    setFilterCategoryFood,
+    filterCategoryFood,
+    filterCategoryDrink,
+    setFilterCategoryDrink,
+    fetchFilterFoodByCategorie,
+    fetchFilterDrinkByCategorie,
   };
 
   return (
