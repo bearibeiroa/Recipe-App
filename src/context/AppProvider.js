@@ -128,13 +128,10 @@ function Provider({ children }) {
     }
   }
 
-  useEffect(() => {
-    fetchFilterFoodByCategorie();
-  }, []);
-
   async function fetchFilterDrinkByCategorie(categorie) {
     const filterDrinkResponse = await
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categorie}`);
+    console.log(filterDrinkResponse);
     const jsonDrinkResponse = await filterDrinkResponse.json();
     const resultDrinks = jsonDrinkResponse.drinks;
     const TWELVE = 12;
@@ -151,10 +148,6 @@ function Provider({ children }) {
       setBtnFilterCategoryDrinks(false);
     }
   }
-
-  useEffect(() => {
-    fetchFilterDrinkByCategorie();
-  }, []);
 
   const context = {
     searchType,
