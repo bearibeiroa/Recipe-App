@@ -4,7 +4,7 @@ import AppContext from '../context/AppContext';
 
 function ReceitaComidas() {
   const [apiResult, setApiResult] = useState([]);
-  const { resultsFoodApi } = useContext(AppContext);
+  const { resultsFoodApi, isFetch } = useContext(AppContext);
   const { id } = useParams();
 
   async function fecthWithId() {
@@ -30,30 +30,31 @@ function ReceitaComidas() {
     ));
   }
 
-  // function reducerRecomendationCard() {
-  //   const SIX = 6;
-  //   if (resultsFoodApi.length > SIX) {
-  //     const limitedArray = resultsFoodApi;
-  //     limitedArray.splice(SIX);
-  //     return (limitedArray.map((item, index) => (
-  //       <span
-  //         key={ index }
-  //         data-testid={ `${index}-recomendation-card` }
-  //       >
-  //         <img src={ `${item.strMealThumb}` } alt="Imagem da receita" />
-  //         <h5>{item.strCategory}</h5>
-  //         <h5>{item.strMeal}</h5>
-  //       </span>)));
-  //   }
-  // }
+  function recomendationCard() {
+    const SIX = 6;
+    if (resultsFoodApi.length > SIX) {
+      const limitedArray = resultsFoodApi;
+      limitedArray.splice(SIX);
+      return (limitedArray.map((item, index) => (
+        <span
+          key={ index }
+          data-testid={ `${index}-recomendation-card` }
+        >
+          <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="100" />
+          <h5>{item.strCategory}</h5>
+          <p>{item.strMeal}</p>
+        </span>
+      )));
+    }
+  }
 
   useEffect(() => {
     fecthWithId();
-  }, [resultsFoodApi]);
+  }, []);
 
   useEffect(() => {
     filterIngredients();
-  }, [apiResult]);
+  }, []);
 
   return (
     <main>
@@ -88,20 +89,10 @@ function ReceitaComidas() {
       />
 
       <h5>Recomendadas</h5>
-      {
-        resultsFoodApi.map((item, index) => (
-          <span
-            key={ index }
-            data-testid={ `${index}-recomendation-card ` }
-          >
-            <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="100" />
-            <h5>{item.strCategory}</h5>
-            <h5>{item.strMeal}</h5>
-          </span>))
-      }
-
+      {isFetch ? recomendationCard() : null}
       <button
         type="button"
+        data-testid="start-recipe-btn"
         className="start-recipe-btn"
       >
         Iniciar Receita

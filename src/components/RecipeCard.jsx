@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 function RecipeCard(props) {
   const history = useHistory();
-  if (history.location.pathname === '/comidas') {
+  if (history.location.pathname.includes('/comidas')) {
     const { info: { strMeal, strMealThumb }, index } = props;
     const imgTestId = `${index}-card-img`;
     const titleTestId = `${index}-card-name`;
@@ -14,7 +14,7 @@ function RecipeCard(props) {
       </section>
     );
   }
-  if (history.location.pathname === '/bebidas') {
+  if (history.location.pathname.includes('/bebidas')) {
     const { info: { strDrink, strDrinkThumb }, index } = props;
     const imgTestId = `${index}-card-img`;
     const titleTestId = `${index}-card-name`;
