@@ -1,14 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router';
 import AppContext from '../context/AppContext';
 
 function FilterButtons() {
   const {
-    categoryFoodButton,
-    categoryDrinkButton,
-    isFetch,
     fetchFilterFoodByCategorie,
     fetchFilterDrinkByCategorie,
   } = useContext(AppContext);
+
+  const [categoryFoodButton, setCategoryFoodButton] = useState([]);
+  const [categoryDrinkButton, setCategoryDrinkButton] = useState([]);
+
+  const history = useHistory();
+
+  async function fetchCategoryButton() {
+    const buttonFoodResponse = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    const buttonFoodResult = await buttonFoodResponse.json();
+    const buttonDrinkResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+    const buttonDrinkResult = await buttonDrinkResponse.json();
+
+    switch (history.location.pathname) {
+    case '/comidas':
+      setCategoryFoodButton(buttonFoodResult.meals);
+      break;
+    case '/bebidas':
+      setCategoryDrinkButton(buttonDrinkResult.drinks);
+      break;
+    default:
+      break;
+    }
+  }
+
+  useEffect(() => {
+    fetchCategoryButton();
+  }, []);
 
   function filterCategoryFiveBtn() {
     const FIVE = 5;
@@ -20,11 +45,13 @@ function FilterButtons() {
           data-testid={ `${food.strCategory}-category-filter` }
           key={ index }
           type="button"
-          onClick={ () => fetchFilterFoodByCategorie(food.strCategory) }
+          onClick={ () => {
+            console.log(food.strCategory);
+            fetchFilterFoodByCategorie(food.strCategory);
+          } }
         >
           {food.strCategory}
-        </button>
-      ));
+        </button>));
     }
     if (categoryDrinkButton.length >= FIVE) {
       const limitedDrinkArray = categoryDrinkButton;
@@ -34,7 +61,10 @@ function FilterButtons() {
           data-testid={ `${drinks.strCategory}-category-filter` }
           key={ index }
           type="button"
-          onClick={ () => fetchFilterDrinkByCategorie(drinks.strCategory) }
+          onClick={ () => {
+            console.log(drinks.strCategory);
+            fetchFilterDrinkByCategorie(drinks.strCategory);
+          } }
         >
           {drinks.strCategory}
         </button>
@@ -44,7 +74,7 @@ function FilterButtons() {
 
   return (
     <span>
-      {isFetch && filterCategoryFiveBtn()}
+      { filterCategoryFiveBtn() }
     </span>
   );
 }

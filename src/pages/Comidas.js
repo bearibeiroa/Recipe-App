@@ -8,20 +8,19 @@ import AppContext from '../context/AppContext';
 function Comidas() {
   const [title] = useState('Comidas');
   const [haveSearch] = useState(true);
-  const { resultsFoodApi,
-    filterCategoryFood, btnFilterCategory, toggle } = useContext(AppContext);
+  const { resultsFoodApi, isFetch } = useContext(AppContext);
 
   function mapRecipeCards() {
     const TWELVE = 12;
     if (resultsFoodApi) {
-      if (resultsFoodApi.length > 1 && resultsFoodApi.length >= TWELVE) {
+      if (resultsFoodApi.length > TWELVE) {
         const limitedArray = resultsFoodApi;
         limitedArray.splice(TWELVE);
         return limitedArray.map(
           (result, index) => <RecipeCard key={ index } index={ index } info={ result } />,
         );
       }
-      if (resultsFoodApi.length > 1 && resultsFoodApi.length <= TWELVE) {
+      if (resultsFoodApi.length >= 1 && resultsFoodApi.length <= TWELVE) {
         return resultsFoodApi.map(
           (result, index) => (
             <RecipeCard
@@ -35,23 +34,11 @@ function Comidas() {
     }
   }
 
-  function filterCategoryFoodCards() {
-    if (filterCategoryFood && !btnFilterCategory) {
-      return filterCategoryFood.map((categorieResult, index) => (
-        <RecipeCard
-          key={ index }
-          info={ categorieResult }
-          index={ index }
-        />
-      ));
-    }
-  }
-
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
       <FilterButtons />
-      {toggle ? filterCategoryFoodCards() : mapRecipeCards() }
+      { isFetch ? mapRecipeCards() : null }
       <Footer />
     </>
   );
