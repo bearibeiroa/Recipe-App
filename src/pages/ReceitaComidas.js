@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import AppContext from '../context/AppContext';
 
 function ReceitaComidas() {
   const [apiResult, setApiResult] = useState([]);
+  const { resultsFoodApi } = useContext(AppContext);
   const { id } = useParams();
 
   async function fecthWithId() {
@@ -28,9 +30,26 @@ function ReceitaComidas() {
     ));
   }
 
+  // function reducerRecomendationCard() {
+  //   const SIX = 6;
+  //   if (resultsFoodApi.length > SIX) {
+  //     const limitedArray = resultsFoodApi;
+  //     limitedArray.splice(SIX);
+  //     return (limitedArray.map((item, index) => (
+  //       <span
+  //         key={ index }
+  //         data-testid={ `${index}-recomendation-card` }
+  //       >
+  //         <img src={ `${item.strMealThumb}` } alt="Imagem da receita" />
+  //         <h5>{item.strCategory}</h5>
+  //         <h5>{item.strMeal}</h5>
+  //       </span>)));
+  //   }
+  // }
+
   useEffect(() => {
     fecthWithId();
-  }, []);
+  }, [resultsFoodApi]);
 
   useEffect(() => {
     filterIngredients();
@@ -58,8 +77,8 @@ function ReceitaComidas() {
       <h5>Video</h5>
       <iframe
         data-testid="video"
-        width="480"
-        height="480"
+        width="420"
+        height="315"
         src={ `${apiResult.strYoutube}` }
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write;
@@ -67,7 +86,20 @@ function ReceitaComidas() {
         allowFullScreen
         title="Embedded youtube"
       />
+
       <h5>Recomendadas</h5>
+      {
+        resultsFoodApi.map((item, index) => (
+          <span
+            key={ index }
+            data-testid={ `${index}-recomendation-card ` }
+          >
+            <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="100" />
+            <h5>{item.strCategory}</h5>
+            <h5>{item.strMeal}</h5>
+          </span>))
+      }
+
       <button
         type="button"
         className="start-recipe-btn"
