@@ -130,6 +130,8 @@ function Provider({ children }) {
     isFetch,
     fetchFilterFoodByCategorie,
     fetchFilterDrinkByCategorie,
+    foodBackup,
+    drinkBackup,
   };
 
   return (

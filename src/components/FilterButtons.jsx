@@ -6,6 +6,10 @@ function FilterButtons() {
   const {
     fetchFilterFoodByCategorie,
     fetchFilterDrinkByCategorie,
+    setResultsDrinkApi,
+    setResultsFoodApi,
+    drinkBackup,
+    foodBackup,
   } = useContext(AppContext);
 
   const [categoryFoodButton, setCategoryFoodButton] = useState([]);
@@ -45,10 +49,7 @@ function FilterButtons() {
           data-testid={ `${food.strCategory}-category-filter` }
           key={ index }
           type="button"
-          onClick={ () => {
-            console.log(food.strCategory);
-            fetchFilterFoodByCategorie(food.strCategory);
-          } }
+          onClick={ () => fetchFilterFoodByCategorie(food.strCategory) }
         >
           {food.strCategory}
         </button>));
@@ -61,10 +62,7 @@ function FilterButtons() {
           data-testid={ `${drinks.strCategory}-category-filter` }
           key={ index }
           type="button"
-          onClick={ () => {
-            console.log(drinks.strCategory);
-            fetchFilterDrinkByCategorie(drinks.strCategory);
-          } }
+          onClick={ () => fetchFilterDrinkByCategorie(drinks.strCategory) }
         >
           {drinks.strCategory}
         </button>
@@ -72,10 +70,30 @@ function FilterButtons() {
     }
   }
 
+  function handleAllClick() {
+    switch (history.location.pathname) {
+    case '/comidas':
+      setResultsFoodApi(foodBackup);
+      break;
+    case '/bebidas':
+      setResultsDrinkApi(drinkBackup);
+      break;
+    default:
+      break;
+    }
+  }
+
   return (
-    <span>
+    <nav>
       { filterCategoryFiveBtn() }
-    </span>
+      <button
+        data-testid="All-category-filter"
+        type="button"
+        onClick={ handleAllClick }
+      >
+        All
+      </button>
+    </nav>
   );
 }
 
