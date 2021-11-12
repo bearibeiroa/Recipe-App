@@ -1,4 +1,6 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import FilterButtons from '../components/FilterButtons';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
@@ -12,22 +14,22 @@ function Comidas() {
   function mapRecipeCards() {
     const TWELVE = 12;
     if (resultsFoodApi) {
-      if (resultsFoodApi.length > 1 && resultsFoodApi.length > TWELVE) {
+      if (resultsFoodApi.length > TWELVE) {
         const limitedArray = resultsFoodApi;
         limitedArray.splice(TWELVE);
         return limitedArray.map(
-          (result, index) => <RecipeCard key={ index } index={ index } info={ result } />,
+          (result, index) => (
+            <Link to={ `/comidas/${result.idMeal}` } key={ index }>
+              <RecipeCard key={ index } index={ index } info={ result } />
+            </Link>),
         );
       }
-      if (resultsFoodApi.length > 1 && resultsFoodApi.length <= TWELVE) {
+      if (resultsFoodApi.length >= 1 && resultsFoodApi.length <= TWELVE) {
         return resultsFoodApi.map(
           (result, index) => (
-            <RecipeCard
-              key={ index }
-              info={ result }
-              index={ index }
-            />
-          ),
+            <Link to={ `/comidas/${result.idMeal}` } key={ index }>
+              <RecipeCard index={ index } key={ index } info={ result } />
+            </Link>),
         );
       }
     }
@@ -36,6 +38,7 @@ function Comidas() {
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
+      <FilterButtons />
       { isFetch ? mapRecipeCards() : null }
       <Footer />
     </>
