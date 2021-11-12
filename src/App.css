@@ -31,8 +31,10 @@
   width: 100%;
 }
 
-.carossel {
+.recomendation {
   display: flex;
+  height: 300px;
+  overflow: scroll;
 }
 
 /*

@@ -40,7 +40,7 @@ function ReceitaComidas() {
           key={ index }
           data-testid={ `${index}-recomendation-card` }
         >
-          <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="100" />
+          <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="200" />
           <h5>{item.strCategory}</h5>
           <p>{item.strMeal}</p>
         </span>
@@ -89,7 +89,7 @@ function ReceitaComidas() {
       />
 
       <h5>Recomendadas</h5>
-      {isFetch ? recomendationCard() : null}
+      {isFetch ? <div className="recomendation">{recomendationCard()}</div> : null}
       <button
         type="button"
         data-testid="start-recipe-btn"
