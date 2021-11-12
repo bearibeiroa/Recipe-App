@@ -89,7 +89,12 @@ function ReceitaComidas() {
       />
 
       <h5>Recomendadas</h5>
-      {isFetch ? <div className="recomendation">{recomendationCard()}</div> : null}
+      <div
+        data-testid="recomendation-card"
+        className="recomendation"
+      >
+        {isFetch ? recomendationCard() : null}
+      </div>
       <button
         type="button"
         data-testid="start-recipe-btn"
