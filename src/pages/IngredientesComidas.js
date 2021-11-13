@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import IngredientCard from '../components/IngredientCard';
+import AppContext from '../context/AppContext';
 
 function IngredientesComidas() {
   const [title] = useState('Explorar Ingredientes');
   const [haveSearch] = useState(false);
-  const [isFetch, setIsFetch] = useState(false);
+  const [isLocalFetch, setIsLocalFetch] = useState(false);
   const [ingredients, setIngredients] = useState([]);
+
+  const { setResultsFoodApi, setIsFetch } = useContext(AppContext);
 
   async function requestIngredients() {
     const TWELVE = 12;
     const request = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
     const result = await request.json();
     setIngredients(result.meals.slice(0, TWELVE));
-    setIsFetch(true);
+    setIsLocalFetch(true);
     console.log(result.meals.slice(0, TWELVE));
   }
 
@@ -22,16 +26,31 @@ function IngredientesComidas() {
     requestIngredients();
   }, []);
 
+  const history = useHistory();
+
+  async function handleClick(name) {
+    const request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${name}`);
+    const result = await request.json();
+    setResultsFoodApi(result.meals);
+    setIsFetch(true);
+    history.push('/comidas');
+  }
+
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
-      { isFetch ? ingredients.map(
+      { isLocalFetch ? ingredients.map(
         (ingredient, index) => (
-          <IngredientCard
+          <button
+            type="button"
             key={ index }
-            index={ index }
-            info={ ingredient }
-          />
+            onClick={ () => handleClick(ingredient.strIngredient) }
+          >
+            <IngredientCard
+              index={ index }
+              info={ ingredient }
+            />
+          </button>
         ),
       ) : null }
       <Footer />

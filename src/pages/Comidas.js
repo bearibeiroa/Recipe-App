@@ -39,7 +39,7 @@ function Comidas() {
     <>
       <Header title={ title } haveSearch={ haveSearch } />
       <FilterButtons />
-      { isFetch ? mapRecipeCards() : null }
+      { isFetch ? mapRecipeCards() : <p>Loading...</p> }
       <Footer />
     </>
   );
