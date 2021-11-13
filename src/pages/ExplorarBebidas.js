@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function ExplorarBebidas() {
-  const [title] = useState('Explorar Comidas');
+  const [title] = useState('Explorar Bebidas');
   const [haveSearch] = useState(false);
   const [isFetch, setIsFetch] = useState(false);
   const [drink, setDrink] = useState([]);

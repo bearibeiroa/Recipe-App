@@ -11,6 +11,7 @@ function Provider({ children }) {
   const [category, setCategory] = useState('');
   const [foodBackup, setFoodBackup] = useState([]);
   const [drinkBackup, setDrinkBackup] = useState([]);
+  const [userEmail, setUserEmail] = useState('');
 
   async function searchFoodRequest(type, inputValue) {
     let response = [];
@@ -133,6 +134,8 @@ function Provider({ children }) {
     fetchFilterDrinkByCategorie,
     foodBackup,
     drinkBackup,
+    userEmail,
+    setUserEmail,
   };
 
   return (
