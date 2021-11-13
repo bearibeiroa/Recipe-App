@@ -36,6 +36,7 @@ function ReceitaBebidas() {
     if (resultsDrinkApi.length > SIX) {
       const limitedArray = resultsDrinkApi;
       limitedArray.splice(SIX);
+      console.log(limitedArray);
       return (limitedArray.map((item, index) => (
         <span
           key={ index }
@@ -52,10 +53,6 @@ function ReceitaBebidas() {
   useEffect(() => {
     fecthWithId();
   }, []);
-
-  useEffect(() => {
-    filterIngredients();
-  }, [apiDrinkRecipe]);
 
   return (
     <main>

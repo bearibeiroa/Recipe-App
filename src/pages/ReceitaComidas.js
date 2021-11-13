@@ -52,10 +52,6 @@ function ReceitaComidas() {
     fecthWithId();
   }, []);
 
-  useEffect(() => {
-    filterIngredients();
-  }, []);
-
   return (
     <main>
       <img
