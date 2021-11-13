@@ -19,7 +19,6 @@ function IngredientesComidas() {
     const result = await request.json();
     setIngredients(result.meals.slice(0, TWELVE));
     setIsLocalFetch(true);
-    console.log(result.meals.slice(0, TWELVE));
   }
 
   useEffect(() => {

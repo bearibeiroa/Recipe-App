@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 function RecipeCard(props) {
   const history = useHistory();
-  if (history.location.pathname === '/comidas') {
+  if (history.location.pathname.includes('/comidas')) {
     const { info: { strMeal, strMealThumb }, index } = props;
     const imgTestId = `${index}-card-img`;
     const titleTestId = `${index}-card-name`;
