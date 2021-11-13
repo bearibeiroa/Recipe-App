@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import AppContext from '../context/AppContext';
 
 function ReceitaComidas() {
   const [apiResult, setApiResult] = useState([]);
-  const { resultsFoodApi, isFetch } = useContext(AppContext);
+  const [foodRecomendation, setFoodRecomendation] = useState([]);
   const { id } = useParams();
 
   async function fecthWithId() {
@@ -30,26 +29,24 @@ function ReceitaComidas() {
     ));
   }
 
-  function recomendationCard() {
+  async function recomendationCard() {
+    const foodResponse = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const foodResult = await foodResponse.json();
+    const foodRec = foodResult.meals;
     const SIX = 6;
-    if (resultsFoodApi.length > SIX) {
-      const limitedArray = resultsFoodApi;
+    if (foodRec.length > SIX) {
+      const limitedArray = foodRec;
       limitedArray.splice(SIX);
-      return (limitedArray.map((item, index) => (
-        <span
-          key={ index }
-          data-testid={ `${index}-recomendation-card` }
-        >
-          <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="200" />
-          <h5>{item.strCategory}</h5>
-          <p>{item.strMeal}</p>
-        </span>
-      )));
+      setFoodRecomendation(limitedArray);
     }
   }
 
   useEffect(() => {
     fecthWithId();
+  }, []);
+
+  useEffect(() => {
+    recomendationCard();
   }, []);
 
   return (
@@ -89,7 +86,16 @@ function ReceitaComidas() {
         data-testid="recomendation-card"
         className="recomendation"
       >
-        {isFetch ? recomendationCard() : null}
+        {foodRecomendation.map((item, index) => (
+          <span
+            key={ index }
+            data-testid={ `${index}-recomendation-card` }
+          >
+            <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="200" />
+            <h5>{item.strCategory}</h5>
+            <p>{item.strMeal}</p>
+          </span>
+        ))}
       </div>
       <button
         type="button"

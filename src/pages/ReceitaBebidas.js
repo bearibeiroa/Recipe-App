@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import AppContext from '../context/AppContext';
+// import AppContext from '../context/AppContext';
 
 function ReceitaBebidas() {
   const [apiDrinkRecipe, setApiDrinkRecipe] = useState([]);
-  const { resultsDrinkApi, isFetch } = useContext(AppContext);
+  const [drinkRecomendation, setDrinkRecomendation] = useState([]);
   const { id } = useParams();
 
   async function fecthWithId() {
@@ -31,27 +31,24 @@ function ReceitaBebidas() {
     ));
   }
 
-  function recomendationCard() {
+  async function recomendationCard() {
+    const drinkResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const drinkResult = await drinkResponse.json();
+    const drinksRec = drinkResult.drinks;
     const SIX = 6;
-    if (resultsDrinkApi.length > SIX) {
-      const limitedArray = resultsDrinkApi;
+    if (drinksRec.length > SIX) {
+      const limitedArray = drinksRec;
       limitedArray.splice(SIX);
-      console.log(limitedArray);
-      return (limitedArray.map((item, index) => (
-        <span
-          key={ index }
-          data-testid={ `${index}-recomendation-card` }
-        >
-          <img src={ `${item.strDrinkThumb}` } alt="Imagem da receita" width="190" />
-          <h5>{item.strCategory}</h5>
-          <p>{item.strDrink}</p>
-        </span>
-      )));
+      setDrinkRecomendation(limitedArray);
     }
   }
 
   useEffect(() => {
     fecthWithId();
+  }, []);
+
+  useEffect(() => {
+    recomendationCard();
   }, []);
 
   return (
@@ -82,7 +79,16 @@ function ReceitaBebidas() {
         data-testid="recomendation-card"
         className="recomendation"
       >
-        {isFetch ? recomendationCard() : null}
+        {drinkRecomendation.map((item, index) => (
+          <span
+            key={ index }
+            data-testid={ `${index} -recomendation-card` }
+          >
+            <img src={ `${item.strDrinkThumb}` } alt="Imagem da receita" width="190" />
+            <h5>{item.strCategory}</h5>
+            <p>{item.strDrink}</p>
+          </span>
+        ))}
       </div>
       <button
         type="button"
