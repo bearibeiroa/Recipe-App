@@ -4,12 +4,19 @@ import { useParams } from 'react-router';
 function ReceitaComidas() {
   const [apiResult, setApiResult] = useState([]);
   const [foodRecomendation, setFoodRecomendation] = useState([]);
+  const [YTVideo, setYTVideo] = useState('');
   const { id } = useParams();
 
   async function fecthWithId() {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const result = await response.json();
     setApiResult(result.meals[0]);
+    setYTVideo(result.meals[0].strYoutube);
+  }
+
+  function embedVideo(strYTVideo) {
+    const embedString = strYTVideo.split('=')[1];
+    return `https://www.youtube.com/embed/${embedString}`;
   }
 
   function filterIngredients() {
@@ -73,7 +80,7 @@ function ReceitaComidas() {
         data-testid="video"
         width="420"
         height="315"
-        src={ `${apiResult.strYoutube}` }
+        src={ embedVideo(YTVideo) }
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write;
         encrypted-media; gyroscope; picture-in-picture"
