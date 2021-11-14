@@ -9,7 +9,7 @@ import AppContext from '../context/AppContext';
 function Bebidas() {
   const [title] = useState('Bebidas');
   const [haveSearch] = useState(true);
-  const { resultsDrinkApi, isFetch } = useContext(AppContext);
+  const { resultsDrinkApi } = useContext(AppContext);
 
   function mapRecipeCards() {
     const TWELVE = 12;
@@ -39,7 +39,7 @@ function Bebidas() {
     <>
       <Header title={ title } haveSearch={ haveSearch } />
       <FilterButtons />
-      { isFetch ? mapRecipeCards() : null }
+      { resultsDrinkApi && mapRecipeCards() }
       <Footer />
     </>
   );

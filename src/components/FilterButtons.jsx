@@ -8,14 +8,23 @@ function FilterButtons() {
     fetchFilterDrinkByCategorie,
     setResultsDrinkApi,
     setResultsFoodApi,
-    drinkBackup,
-    foodBackup,
   } = useContext(AppContext);
 
   const [categoryFoodButton, setCategoryFoodButton] = useState([]);
   const [categoryDrinkButton, setCategoryDrinkButton] = useState([]);
+  const [foodBackup, setFoodBackup] = useState([]);
+  const [drinkBackup, setDrinkBackup] = useState([]);
 
   const history = useHistory();
+
+  async function fetchRequestRecipes() {
+    const drinkResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const drinkResult = await drinkResponse.json();
+    setDrinkBackup(drinkResult.drinks);
+    const foodResponse = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const foodResult = await foodResponse.json();
+    setFoodBackup(foodResult.meals);
+  }
 
   async function fetchCategoryButton() {
     const buttonFoodResponse = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
@@ -37,32 +46,29 @@ function FilterButtons() {
 
   useEffect(() => {
     fetchCategoryButton();
+    fetchRequestRecipes();
   }, []);
 
   function filterCategoryFiveBtn() {
     const FIVE = 5;
     if (categoryFoodButton.length >= FIVE) {
-      const limitedFoodArray = categoryFoodButton;
-      limitedFoodArray.splice(FIVE);
-      return limitedFoodArray.map((food, index) => (
+      return categoryFoodButton.slice(0, FIVE).map((food, index) => (
         <button
           data-testid={ `${food.strCategory}-category-filter` }
           key={ index }
           type="button"
-          onClick={ () => fetchFilterFoodByCategorie(food.strCategory) }
+          onClick={ () => fetchFilterFoodByCategorie(food.strCategory, foodBackup) }
         >
           {food.strCategory}
         </button>));
     }
     if (categoryDrinkButton.length >= FIVE) {
-      const limitedDrinkArray = categoryDrinkButton;
-      limitedDrinkArray.splice(FIVE);
-      return limitedDrinkArray.map((drinks, index) => (
+      return categoryDrinkButton.slice(0, FIVE).map((drinks, index) => (
         <button
           data-testid={ `${drinks.strCategory}-category-filter` }
           key={ index }
           type="button"
-          onClick={ () => fetchFilterDrinkByCategorie(drinks.strCategory) }
+          onClick={ () => fetchFilterDrinkByCategorie(drinks.strCategory, drinkBackup) }
         >
           {drinks.strCategory}
         </button>
