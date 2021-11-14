@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
+import AppContext from '../context/AppContext';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUserEmail } = useContext(AppContext);
   const history = useHistory();
 
   // código retirado de: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
@@ -25,6 +27,7 @@ function Login() {
       email,
     };
     localStorage.setItem('user', JSON.stringify(user));
+    setUserEmail(email);
     history.push('/comidas');
   }
 
