@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-// import AppContext from '../context/AppContext';
+import { useHistory, useLocation } from 'react-router-dom';
 
 function ReceitaBebidas() {
   const [apiDrinkRecipe, setApiDrinkRecipe] = useState([]);
   const [drinkRecomendation, setDrinkRecomendation] = useState([]);
   const { id } = useParams();
+  const history = useHistory();
+  const { pathname } = useLocation();
 
   async function fecthWithId() {
     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -41,6 +43,10 @@ function ReceitaBebidas() {
       limitedArray.splice(SIX);
       setDrinkRecomendation(limitedArray);
     }
+  }
+
+  function handleClick() {
+    history.push(`${pathname}/in-progress`);
   }
 
   useEffect(() => {
@@ -94,6 +100,7 @@ function ReceitaBebidas() {
         type="button"
         data-testid="start-recipe-btn"
         className="start-recipe-btn"
+        onClick={ () => handleClick() }
       >
         Iniciar Receita
       </button>

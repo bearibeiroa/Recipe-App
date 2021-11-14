@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 
 function ReceitaComidas() {
   const [apiResult, setApiResult] = useState([]);
   const [foodRecomendation, setFoodRecomendation] = useState([]);
   const [YTVideo, setYTVideo] = useState('');
   const { id } = useParams();
+  const history = useHistory();
+  const { pathname } = useLocation();
 
   async function fecthWithId() {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -46,6 +49,10 @@ function ReceitaComidas() {
       limitedArray.splice(SIX);
       setFoodRecomendation(limitedArray);
     }
+  }
+
+  function handleClick() {
+    history.push(`${pathname}/in-progress`);
   }
 
   useEffect(() => {
@@ -108,6 +115,7 @@ function ReceitaComidas() {
         type="button"
         data-testid="start-recipe-btn"
         className="start-recipe-btn"
+        onClick={ () => handleClick() }
       >
         Iniciar Receita
       </button>
