@@ -91,7 +91,7 @@ function ReceitaComidas() {
             key={ index }
             data-testid={ `${index}-recomendation-card` }
           >
-            <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="200" />
+            <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="180" />
             <h5>{item.strCategory}</h5>
             <p>{item.strMeal}</p>
           </span>

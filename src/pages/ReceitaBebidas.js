@@ -82,9 +82,9 @@ function ReceitaBebidas() {
         {drinkRecomendation.map((item, index) => (
           <span
             key={ index }
-            data-testid={ `${index} -recomendation-card` }
+            data-testid={ `${index}-recomendation-card` }
           >
-            <img src={ `${item.strDrinkThumb}` } alt="Imagem da receita" width="190" />
+            <img src={ `${item.strDrinkThumb}` } alt="Imagem da receita" width="180" />
             <h5>{item.strCategory}</h5>
             <p>{item.strDrink}</p>
           </span>
