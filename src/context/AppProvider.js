@@ -128,6 +128,7 @@ function Provider({ children }) {
     resultsDrinkApi,
     setResultsDrinkApi,
     isFetch,
+    setIsFetch,
     fetchFilterFoodByCategorie,
     fetchFilterDrinkByCategorie,
     foodBackup,
