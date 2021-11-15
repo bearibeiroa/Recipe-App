@@ -41,7 +41,7 @@ function ReceitaBebidas() {
       { apiDrinkRecipe && <DetailsCard
         strMealThumb={ apiDrinkRecipe.strDrinkThumb }
         strMeal={ apiDrinkRecipe.strDrink }
-        strCategory={ apiDrinkRecipe.strCategory }
+        strCategory={ apiDrinkRecipe.strAlcoholic }
         strInstructions={ apiDrinkRecipe.strInstructions }
         filterIngredients={ filterIngredients() }
       />}

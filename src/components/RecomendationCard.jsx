@@ -10,7 +10,7 @@ function RecomendationCard() {
   const SIX = 6;
 
   function recomendations() {
-    if (history.location.pathname.includes('/comidas')) {
+    if (history.location.pathname.includes('/bebidas')) {
       return (
         resultsFoodApi.slice(0, SIX).map((item, index) => (
           <span
@@ -19,11 +19,11 @@ function RecomendationCard() {
           >
             <img src={ `${item.strMealThumb}` } alt="Imagem da receita" width="180" />
             <h5>{item.strCategory}</h5>
-            <p>{item.strMeal}</p>
+            <p data-testid={ `${index}-recomendation-title` }>{item.strMeal}</p>
           </span>
         ))
       );
-    } if (history.location.pathname.includes('/bebidas')) {
+    } if (history.location.pathname.includes('/comidas')) {
       return (
         resultsDrinkApi.slice(0, SIX).map((item, index) => (
           <span
@@ -32,7 +32,7 @@ function RecomendationCard() {
           >
             <img src={ `${item.strDrinkThumb}` } alt="Imagem da receita" width="180" />
             <h5>{item.strCategory}</h5>
-            <p>{item.strDrink}</p>
+            <p data-testid={ `${index}-recomendation-title` }>{item.strDrink}</p>
           </span>
         ))
       );
@@ -43,7 +43,6 @@ function RecomendationCard() {
     <>
       <h5>Recomendadas</h5>
       <div
-        data-testid="recomendation-card"
         className="recomendation"
       >
         {recomendations()}
