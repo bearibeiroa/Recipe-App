@@ -43,7 +43,7 @@ function App() {
             path="/explorar/bebidas/ingredientes"
             component={ IngredientesBebidas }
           />
-          <Route path="/explorar/comidas/area" component={ LocalComidas } />
+          <Route exact path="/explorar/comidas/area" component={ LocalComidas } />
           <Route path="/perfil" component={ Perfil } />
           <Route path="/receitas-feitas" component={ ReceitasFeitas } />
           <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />

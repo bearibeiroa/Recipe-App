@@ -9,6 +9,7 @@ function Provider({ children }) {
   const [resultsDrinkApi, setResultsDrinkApi] = useState([]);
   const [isFetch, setIsFetch] = useState(false);
   const [category, setCategory] = useState('');
+  const [userEmail, setUserEmail] = useState('');
 
   async function searchFoodRequest(type, inputValue) {
     let response = [];
@@ -123,8 +124,11 @@ function Provider({ children }) {
     resultsDrinkApi,
     setResultsDrinkApi,
     isFetch,
+    setIsFetch,
     fetchFilterFoodByCategorie,
     fetchFilterDrinkByCategorie,
+    userEmail,
+    setUserEmail,
   };
 
   return (
