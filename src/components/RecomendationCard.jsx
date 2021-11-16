@@ -9,7 +9,7 @@ function RecomendationCard() {
   const history = useHistory();
   const SIX = 6;
 
-  function recomendations() {
+  const Recomendations = () => {
     if (history.location.pathname.includes('/bebidas')) {
       return (
         resultsFoodApi.slice(0, SIX).map((item, index) => (
@@ -37,7 +37,7 @@ function RecomendationCard() {
         ))
       );
     }
-  }
+  };
 
   return (
     <>
@@ -45,7 +45,7 @@ function RecomendationCard() {
       <div
         className="recomendation"
       >
-        {recomendations()}
+        <Recomendations />
       </div>
     </>
   );
