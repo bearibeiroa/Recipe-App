@@ -9,7 +9,7 @@ function DetailsCard({
         data-testid="recipe-photo"
         src={ strMealThumb }
         alt="Imagem da receita"
-        width="300"
+        width="360"
       />
       <h1 data-testid="recipe-title">{strMeal}</h1>
       <button data-testid="share-btn" type="button">Share</button>
@@ -27,12 +27,20 @@ function DetailsCard({
   );
 }
 
+DetailsCard.defaultProps = {
+  strMealThumb: '',
+  strMeal: '',
+  strCategory: '',
+  filterIngredients: [],
+  strInstructions: '',
+};
+
 DetailsCard.propTypes = {
-  strMealThumb: PropTypes.string.isRequired,
-  strMeal: PropTypes.string.isRequired,
-  strCategory: PropTypes.string.isRequired,
-  filterIngredients: PropTypes.func.isRequired,
-  strInstructions: PropTypes.string.isRequired,
+  strMealThumb: PropTypes.string,
+  strMeal: PropTypes.string,
+  strCategory: PropTypes.string,
+  filterIngredients: PropTypes.arrayOf(PropTypes.any),
+  strInstructions: PropTypes.string,
 };
 
 export default DetailsCard;
