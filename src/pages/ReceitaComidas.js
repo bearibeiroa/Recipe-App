@@ -54,12 +54,12 @@ function ReceitaComidas() {
     history.push(`/comidas/${id}/in-progress`);
   }
 
-  function btnText() {
-    if (!inProgressLS && !inProgressLS.meals) return false;
-    const inProgressKey = Object.keys(inProgressLS.meals);
-    const checkId = inProgressKey.some((idItem) => id === idItem);
-    return checkId;
-  }
+  // function btnText() {
+  //   if (!inProgressLS && !inProgressLS.meals) return false;
+  //   const inProgressKey = Object.keys(inProgressLS.meals);
+  //   const checkId = inProgressKey.some((idItem) => id === idItem);
+  //   return checkId;
+  // }
 
   return (
     <main>
@@ -91,7 +91,7 @@ function ReceitaComidas() {
         className="start-recipe-btn"
         onClick={ handleClick }
       >
-        { btnText() ? 'Continuar Receita' : 'Iniciar Receita' }
+        Iniciar Receita
       </button>
 
     </main>
