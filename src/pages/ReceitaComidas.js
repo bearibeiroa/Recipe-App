@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import ButtonRecipeDetails from '../components/ButtonRecipeDetails';
+import { useHistory } from 'react-router-dom';
 import DetailsCard from '../components/DetailsCard';
 import RecomendationCard from '../components/RecomendationCard';
 
 function ReceitaComidas() {
   const [apiResult, setApiResult] = useState([]);
   const { id } = useParams();
+  const history = useHistory();
 
   async function fecthWithId() {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -42,6 +43,24 @@ function ReceitaComidas() {
     ));
   }
 
+  const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  function handleClick() {
+    if (!inProgressLS) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        cocktails: {},
+        meals: {},
+      }));
+    }
+    history.push(`/comidas/${id}/in-progress`);
+  }
+
+  function btnText() {
+    if (!inProgressLS && !inProgressLS.meals) return false;
+    const inProgressKey = Object.keys(inProgressLS.meals);
+    const checkId = inProgressKey.some((idItem) => id === idItem);
+    return checkId;
+  }
+
   return (
     <main>
       { apiResult && <DetailsCard
@@ -65,9 +84,16 @@ function ReceitaComidas() {
       />
 
       <RecomendationCard />
-      <ButtonRecipeDetails
-        title="Iniciar Receita"
-      />
+
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="start-recipe-btn"
+        onClick={ handleClick }
+      >
+        { btnText() ? 'Continuar Receita' : 'Iniciar Receita' }
+      </button>
+
     </main>
   );
 }

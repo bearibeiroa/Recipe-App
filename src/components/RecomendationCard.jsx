@@ -4,8 +4,6 @@ import AppContext from '../context/AppContext';
 
 function RecomendationCard() {
   const { resultsFoodApi, resultsDrinkApi } = useContext(AppContext);
-  console.log('recomendation food contexto', resultsFoodApi);
-  console.log('recomendation drink contexto', resultsDrinkApi);
   const history = useHistory();
   const SIX = 6;
 

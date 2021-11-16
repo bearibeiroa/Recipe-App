@@ -28,24 +28,12 @@ function Login() {
     };
     localStorage.setItem('user', JSON.stringify(user));
     setUserEmail(email);
-    history.push('/comidas');
 
     const inProgressRecipes = {
       cocktails: {},
       meals: {},
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-
-    const favoriteRecipes = [{
-      id: '',
-      type: '',
-      area: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-    }];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
 
     const doneRecipes = [{
       id: '',
@@ -59,6 +47,18 @@ function Login() {
       tags: '',
     }];
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+
+    const favoriteRecipes = [{
+      id: '',
+      type: '',
+      area: '',
+      category: '',
+      alcoholicOrNot: '',
+      name: '',
+      image: '',
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    history.push('/comidas');
   }
 
   return (

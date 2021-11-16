@@ -5,6 +5,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 function ButtonRecipeDetails({ title }) {
   const { pathname } = useLocation();
   const history = useHistory();
+
   function handleClick() {
     if (title === 'Iniciar Receita') {
       history.push(`${pathname}/in-progress`);
