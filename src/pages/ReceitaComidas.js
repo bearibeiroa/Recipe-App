@@ -10,6 +10,7 @@ function ReceitaComidas() {
   const { id } = useParams();
   const history = useHistory();
   const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
   const inProgressRecipes = () => {
     if (!inProgressLS) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
