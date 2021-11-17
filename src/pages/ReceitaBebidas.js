@@ -1,54 +1,87 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import ButtonRecipeDetails from '../components/ButtonRecipeDetails';
-import DetailsCard from '../components/DetailsCard';
+import { useHistory } from 'react-router-dom';
+import RecipeDetails from '../components/RecipeDetails';
 import RecomendationCard from '../components/RecomendationCard';
 
 function ReceitaBebidas() {
-  const [apiDrinkRecipe, setApiDrinkRecipe] = useState([]);
+  const [apiResult, setApiResult] = useState([]);
   const { id } = useParams();
+  const history = useHistory();
+  const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+  const inProgressRecipes = () => {
+    if (!inProgressLS) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        meals: {},
+        cocktails: {},
+      }));
+    } else {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...inProgressLS,
+      }));
+    }
+  };
+  inProgressRecipes();
 
   async function fecthWithId() {
     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
     const result = await response.json();
-    setApiDrinkRecipe(result.drinks[0]);
+    setApiResult(result.drinks[0]);
+  }
+
+  function hideStartButton() {
+    const doneRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (doneRecipe && doneRecipe.some((recipe) => recipe.id === id)) {
+      return false;
+    }
+    return true;
+  }
+
+  function changeStartButton() {
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const keys = Object.keys(inProgress.cocktails);
+    if (inProgress && keys.some((key) => key === id)) {
+      return false;
+    }
+    return true;
   }
 
   useEffect(() => {
     fecthWithId();
   }, []);
 
-  function filterIngredients() {
-    const ingredients = Object.keys(apiDrinkRecipe);
-    const ingredientKeys = ingredients.filter((key) => key.includes('strIngredient'));
-    const measure = Object.keys(apiDrinkRecipe);
-    const measureKeys = measure.filter((key) => key.includes('strMeasure'));
-
-    return ingredientKeys.map((ingredient, index) => (
-      apiDrinkRecipe[ingredient] === null || apiDrinkRecipe[ingredient] === '' ? null : (
-        <li
-          key={ index }
-          data-testid={ `${index}-ingredient-name-and-measure` }
-        >
-          {`${apiDrinkRecipe[ingredient]} - ${apiDrinkRecipe[measureKeys[index]]}`}
-        </li>)
-    ));
+  function handleClick() {
+    const fetchKeys = Object.keys(apiResult);
+    const ingredientKeys = fetchKeys.filter((key) => key.includes('strIngredient'));
+    const filteredKeys = ingredientKeys.filter((key) => apiResult[key] !== (null));
+    console.log(filteredKeys);
+    const mapIngredients = filteredKeys.map((ingredient) => apiResult[ingredient]);
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...inProgressLS,
+      cocktails: {
+        ...inProgressLS.cocktails,
+        [id]: mapIngredients,
+      },
+    }));
+    history.push(`/bebidas/${id}/in-progress`);
   }
 
   return (
     <main>
-      { apiDrinkRecipe && <DetailsCard
-        strMealThumb={ apiDrinkRecipe.strDrinkThumb }
-        strMeal={ apiDrinkRecipe.strDrink }
-        strCategory={ apiDrinkRecipe.strAlcoholic }
-        strInstructions={ apiDrinkRecipe.strInstructions }
-        filterIngredients={ filterIngredients() }
-      />}
+      { apiResult && <RecipeDetails data={ apiResult } />}
       <RecomendationCard />
-      <ButtonRecipeDetails
-        title="Iniciar Receita"
-      />
+      { hideStartButton() && (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="start-recipe-btn"
+          onClick={ handleClick }
+        >
+          { changeStartButton() ? 'Iniciar Receita' : 'Continuar Receita' }
+        </button>) }
+
     </main>
   );
 }

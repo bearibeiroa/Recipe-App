@@ -35,28 +35,10 @@ function Login() {
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
 
-    const doneRecipes = [{
-      id: '',
-      type: '',
-      area: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-      doneDate: '',
-      tags: '',
-    }];
+    const doneRecipes = [];
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 
-    const favoriteRecipes = [{
-      id: '',
-      type: '',
-      area: '',
-      category: '',
-      alcoholicOrNot: '',
-      name: '',
-      image: '',
-    }];
+    const favoriteRecipes = [];
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
     history.push('/comidas');
   }
