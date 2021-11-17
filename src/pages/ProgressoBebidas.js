@@ -2,7 +2,7 @@ import React from 'react';
 
 function ProgressoBebidas() {
   return (
-    <h1>Página não encontrada :(</h1>
+    <h1>Progresso Bebidas</h1>
   );
 }
 

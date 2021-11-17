@@ -9,18 +9,28 @@ function RecipeCard(props) {
     const titleTestId = `${index}-card-name`;
     return (
       <section data-testid={ `${index}-recipe-card` }>
-        <img data-testid={ imgTestId } src={ strMealThumb } alt="Imagem da receita" />
+        <img
+          data-testid={ imgTestId }
+          src={ strMealThumb }
+          alt="Imagem da receita"
+          width="200"
+        />
         <p data-testid={ titleTestId }>{ strMeal }</p>
       </section>
     );
   }
-  if (history.location.pathname === '/bebidas') {
+  if (history.location.pathname.includes('/bebidas')) {
     const { info: { strDrink, strDrinkThumb }, index } = props;
     const imgTestId = `${index}-card-img`;
     const titleTestId = `${index}-card-name`;
     return (
       <section data-testid={ `${index}-recipe-card` }>
-        <img data-testid={ imgTestId } src={ strDrinkThumb } alt="Imagem da receita" />
+        <img
+          data-testid={ imgTestId }
+          src={ strDrinkThumb }
+          alt="Imagem da receita"
+          width="200"
+        />
         <p data-testid={ titleTestId }>{ strDrink }</p>
       </section>
     );

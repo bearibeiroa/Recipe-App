@@ -22,6 +22,20 @@
   width: 100%;
 }
 
+.start-recipe-btn {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+.recomendation {
+  display: flex;
+  height: 300px;
+  overflow: scroll;
+}
+
 /*
 #iceLeft {
   animation: clink .8s infinite ease;
