@@ -25,6 +25,30 @@ function ReceitaComidas() {
   };
   inProgressRecipes();
 
+  const loadFavRecipes = () => {
+    const favLS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (!favLS) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...favLS]));
+    }
+  };
+  loadFavRecipes();
+
+  function createLocalStorage() {
+    const favLS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoriteRecipes = [...favLS, {
+      id,
+      type: 'comida',
+      area: apiResult.strArea,
+      category: apiResult.strCategory,
+      alcoholicOrNot: '',
+      name: apiResult.strMeal,
+      image: apiResult.strMealThumb,
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }
+
   async function fecthWithId() {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const result = await response.json();
@@ -70,7 +94,11 @@ function ReceitaComidas() {
 
   return (
     <main>
-      { apiResult && <RecipeDetails data={ apiResult } />}
+      { apiResult && (
+        <RecipeDetails
+          data={ apiResult }
+          createLocalStorage={ createLocalStorage }
+        />) }
       <VideoCard data={ apiResult } />
       <RecomendationCard />
       { hideStartButton() && (

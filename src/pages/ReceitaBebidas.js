@@ -23,7 +23,31 @@ function ReceitaBebidas() {
       }));
     }
   };
+
   inProgressRecipes();
+  const loadFavRecipes = () => {
+    const favLS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (!favLS) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...favLS]));
+    }
+  };
+  loadFavRecipes();
+
+  function createLocalStorage() {
+    const favLS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoriteRecipes = [...favLS, {
+      id,
+      type: 'bebida',
+      area: '',
+      category: apiResult.strCategory,
+      alcoholicOrNot: apiResult.strAlcoholic,
+      name: apiResult.strDrink,
+      image: apiResult.strDrinkThumb,
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }
 
   async function fecthWithId() {
     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -70,7 +94,8 @@ function ReceitaBebidas() {
 
   return (
     <main>
-      { apiResult && <RecipeDetails data={ apiResult } />}
+      { apiResult && (
+        <RecipeDetails data={ apiResult } createLocalStorage={ createLocalStorage } />)}
       <RecomendationCard />
       { hideStartButton() && (
         <button
