@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 
+const copy = require('clipboard-copy');
+
 function RecipeDetails({ data: apiResult }) {
   const history = useHistory();
   function filterIngredients() {
@@ -23,6 +25,12 @@ function RecipeDetails({ data: apiResult }) {
         </li>)
     ));
   }
+
+  async function copyLink() {
+    const successPromise = await copy(`http://localhost:3000${history.location.pathname}`);
+    if (successPromise) global.alert('Link copiado!');
+  }
+
   if (history.location.pathname.includes('/comidas')) {
     return (
       <section>
@@ -33,7 +41,7 @@ function RecipeDetails({ data: apiResult }) {
           width="300"
         />
         <h1 data-testid="recipe-title">{ `${apiResult.strMeal}`}</h1>
-        <button data-testid="share-btn" type="button">Share</button>
+        <button data-testid="share-btn" onClick={ copyLink } type="button">Share</button>
         <button data-testid="favorite-btn" type="button">Fav</button>
         <h5 data-testid="recipe-category">{ `${apiResult.strCategory}`}</h5>
         <h5>Ingredients</h5>
@@ -56,7 +64,7 @@ function RecipeDetails({ data: apiResult }) {
           width="300"
         />
         <h1 data-testid="recipe-title">{ `${apiResult.strDrink}`}</h1>
-        <button data-testid="share-btn" type="button">Share</button>
+        <button data-testid="share-btn" onClick={ copyLink } type="button">Share</button>
         <button data-testid="favorite-btn" type="button">Fav</button>
         <h5 data-testid="recipe-category">{ `${apiResult.strAlcoholic}`}</h5>
         <h5>Ingredients</h5>
