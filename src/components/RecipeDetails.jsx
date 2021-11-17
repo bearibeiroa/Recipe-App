@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router';
 import emptyHeart from '../images/whiteHeartIcon.svg';
 import filledHeart from '../images/blackHeartIcon.svg';
+import shareSymbol from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -24,7 +25,7 @@ function RecipeDetails({ data: apiResult, createLocalStorage }) {
           key={ index }
           data-testid={ `${index}-ingredient-name-and-measure` }
         >
-          {`${apiResult[ingredient]} - 
+          {`${apiResult[ingredient]} -
           ${apiResult[filteredMeasure[index]] || 'to taste'}`}
         </li>)
     ));
@@ -68,7 +69,9 @@ function RecipeDetails({ data: apiResult, createLocalStorage }) {
           width="300"
         />
         <h1 data-testid="recipe-title">{ `${apiResult.strMeal}`}</h1>
-        <button data-testid="share-btn" onClick={ copyLink } type="button">Share</button>
+        <button data-testid="share-btn" onClick={ copyLink } type="button">
+          <img src={ shareSymbol } alt="Icone de favoritar" />
+        </button>
         <button type="button" onClick={ favRecipe }>
           { fav ? (
             <img

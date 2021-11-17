@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import emptyHeart from '../images/whiteHeartIcon.svg';
+import shareSymbol from '../images/shareIcon.svg';
 
 function DetailsCard({
   strMealThumb, strMeal, strCategory, filterIngredients, strInstructions }) {
@@ -12,8 +14,15 @@ function DetailsCard({
         width="360"
       />
       <h1 data-testid="recipe-title">{strMeal}</h1>
-      <button data-testid="share-btn" type="button">Share</button>
-      <button data-testid="favorite-btn" type="button">Fav</button>
+      <button data-testid="share-btn" type="button">
+        <img src={ shareSymbol } alt="Icone de favoritar" />
+      </button>
+      <button
+        data-testid="favorite-btn"
+        type="button"
+      >
+        <img src={ emptyHeart } alt="Icone de favoritar" />
+      </button>
       <h5 data-testid="recipe-category">{strCategory}</h5>
       <h5>Ingredients</h5>
       <ul>{filterIngredients}</ul>

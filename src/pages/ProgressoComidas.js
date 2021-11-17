@@ -10,6 +10,22 @@ function ProgressoComidas() {
   const { id } = useParams();
   const history = useHistory();
 
+  function createLocalStorage() {
+    const favLS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoriteRecipes = [...favLS, {
+      id,
+      type: 'comida',
+      area: apiResult.strArea,
+      category: apiResult.strCategory,
+      alcoholicOrNot: '',
+      name: apiResult.strMeal,
+      image: apiResult.strMealThumb,
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }
+
+  createLocalStorage();
+
   async function fecthWithId() {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const result = await response.json();
