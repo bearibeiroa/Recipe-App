@@ -6,25 +6,11 @@ import '../App.css';
 import Ingredients from '../components/Ingredients';
 
 function ProgressoComidas() {
+  const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  console.log(inProgressLS);
   const [apiResult, setApiResult] = useState([]);
   const { id } = useParams();
   const history = useHistory();
-
-  function createLocalStorage() {
-    const favLS = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const favoriteRecipes = [...favLS, {
-      id,
-      type: 'comida',
-      area: apiResult.strArea,
-      category: apiResult.strCategory,
-      alcoholicOrNot: '',
-      name: apiResult.strMeal,
-      image: apiResult.strMealThumb,
-    }];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-  }
-
-  createLocalStorage();
 
   async function fecthWithId() {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -43,7 +29,7 @@ function ProgressoComidas() {
     const measureKeys = ingredients.filter((key) => key.includes('strMeasure'));
     const filteredMeasure = measureKeys.filter((key) => apiResult[key] !== (null));
     return filteredKeys.map((ingredient, index) => (
-      apiResult[ingredient] === ('') ? null : (
+      apiResult[ingredient] && (
         <span key={ index }>
           <Ingredients
             index={ index }
