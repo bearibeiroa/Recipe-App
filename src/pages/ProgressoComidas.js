@@ -3,10 +3,10 @@ import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import DetailsCard from '../components/DetailsCard';
 import '../App.css';
+import Ingredients from '../components/Ingredients';
 
 function ProgressoComidas() {
   const [apiResult, setApiResult] = useState([]);
-  const [isChecked, setIsChecked] = useState([{ check: false }]);
   const { id } = useParams();
   const history = useHistory();
 
@@ -36,37 +36,22 @@ function ProgressoComidas() {
     fecthWithId();
   }, []);
 
-  const handleOnChange = (index) => {
-    setIsChecked((currentIndex) => currentIndex.map((item, Itemindex) => {
-      if (Itemindex === index) {
-        return { ...item };
-      }
-      return item;
-    }));
-  };
-
   function filterIngredients() {
     const ingredients = Object.keys(apiResult);
     const ingredientKeys = ingredients.filter((key) => key.includes('strIngredient'));
     const filteredKeys = ingredientKeys.filter((key) => apiResult[key] !== (null));
-    const measure = Object.keys(apiResult);
-    const measureKeys = measure.filter((key) => key.includes('strMeasure'));
+    const measureKeys = ingredients.filter((key) => key.includes('strMeasure'));
     const filteredMeasure = measureKeys.filter((key) => apiResult[key] !== (null));
     return filteredKeys.map((ingredient, index) => (
       apiResult[ingredient] === ('') ? null : (
-        <li
-          key={ index }
-          data-testid={ `${index}-ingredient-step` }
-          className={ isChecked.check ? 'strike' : '' }
-        >
-          <input
-            type="checkbox"
-            checked={ isChecked.check }
-            onChange={ () => handleOnChange(index) }
+        <span key={ index }>
+          <Ingredients
+            index={ index }
+            ingredient={ apiResult[ingredient] }
+            measure={ apiResult[filteredMeasure[index]] }
           />
-          {`${apiResult[ingredient]} -
-          ${apiResult[filteredMeasure[index]] || 'to taste'}`}
-        </li>)
+        </span>
+      )
     ));
   }
 
