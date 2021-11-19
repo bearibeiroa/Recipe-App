@@ -25,7 +25,7 @@ function DetailsCard({
       </button>
       <h5 data-testid="recipe-category">{strCategory}</h5>
       <h5>Ingredients</h5>
-      <ul>{filterIngredients}</ul>
+      <ul>{filterIngredients()}</ul>
       <h5>Instructions</h5>
       <p data-testid="instructions">
         {' '}

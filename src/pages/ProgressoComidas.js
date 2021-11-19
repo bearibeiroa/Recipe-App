@@ -7,7 +7,6 @@ import Ingredients from '../components/Ingredients';
 
 function ProgressoComidas() {
   const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  console.log(inProgressLS);
   const [apiResult, setApiResult] = useState([]);
   const { id } = useParams();
   const history = useHistory();
@@ -18,8 +17,34 @@ function ProgressoComidas() {
     setApiResult(result.meals[0]);
   }
 
+  const inProgressRecipes = () => {
+    if (!inProgressLS) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        meals: { [id]: [] },
+        cocktails: {},
+      }));
+    } else {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...inProgressLS,
+      }));
+    }
+  };
+  inProgressRecipes();
+
+  const checkedItemLS = () => {
+    const ingredientItem = document.querySelectorAll('.checkedItem');
+    ingredientItem.forEach((item) => {
+      inProgressLS.meals[id].forEach((ingr) => {
+        if (item.value === ingr) {
+          item.checked = true;
+        }
+      });
+    });
+  };
+
   useEffect(() => {
     fecthWithId();
+    checkedItemLS();
   }, []);
 
   function filterIngredients() {
@@ -48,7 +73,7 @@ function ProgressoComidas() {
         strMeal={ apiResult.strMeal }
         strCategory={ apiResult.strCategory }
         strInstructions={ apiResult.strInstructions }
-        filterIngredients={ filterIngredients() }
+        filterIngredients={ filterIngredients }
       />
       <button
         type="button"
