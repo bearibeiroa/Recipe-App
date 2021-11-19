@@ -43,14 +43,14 @@ function Ingredients({ measure, index, ingredient }) {
 
   return (
     <li
-      className={ isChecked ? 'strike' : '' }
+      className={ !isChecked ? 'strike' : '' }
       data-testid={ `${index}-ingredient-step` }
     >
       <input
         type="checkbox"
         value={ ingredient }
         onChange={ (event) => saveInProgress(event) }
-        // checked={ isChecked }
+        checked={ !isChecked }
       />
       {`${ingredient} - ${measure || 'to taste'}`}
     </li>
