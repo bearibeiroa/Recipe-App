@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import emptyHeart from '../images/whiteHeartIcon.svg';
 import shareSymbol from '../images/shareIcon.svg';
 
-function DetailsCard({
-  strMealThumb, strMeal, strCategory, filterIngredients, strInstructions }) {
+const copy = require('clipboard-copy');
+
+function DetailsCard({ strMealThumb, strMeal, strCategory,
+  filterIngredients, strInstructions }) {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const copyLink = () => {
+    const message = window.location.href.replace('/in-progress', '');
+    copy(message);
+    setIsCopied(!isCopied);
+  };
+
   return (
     <>
       <img
@@ -14,7 +24,8 @@ function DetailsCard({
         width="360"
       />
       <h1 data-testid="recipe-title">{strMeal}</h1>
-      <button data-testid="share-btn" type="button">
+      <div>{isCopied ? 'Link copiado!' : null}</div>
+      <button data-testid="share-btn" type="button" onClick={ () => copyLink() }>
         <img src={ shareSymbol } alt="Icone de favoritar" />
       </button>
       <button

@@ -55,6 +55,17 @@ function ProgressoComidas() {
     ));
   }
 
+  const enableButton = () => {
+    const ingredients = Object.keys(apiResult);
+    const ingredientKeys = ingredients.filter((key) => key.includes('strIngredient'));
+    const filteredKeys = ingredientKeys.filter((key) => apiResult[key] !== (null));
+    const LSData = JSON.parse(localStorage.getItem('inProgressRecipes')).meals[id];
+    if (LSData.length === filteredKeys.length) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
       <DetailsCard
@@ -68,6 +79,7 @@ function ProgressoComidas() {
         type="button"
         className="start-recipe-btn"
         data-testid="finish-recipe-btn"
+        disabled={ enableButton() }
         onClick={ () => history.push('/receitas-feitas') }
       >
         Finalizar Receita
