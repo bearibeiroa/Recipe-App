@@ -136,7 +136,7 @@ describe('35 - Desenvolva a tela de forma que contenha uma imagem da receita, o 
     cy.get('[data-testid="2-ingredient-name-and-measure"]').contains('1 oz');
 
     cy.get('[data-testid="instructions"]').contains(oneDrink.drinks[0].strInstructions);
-    
+
     cy.get('[data-testid*="recomendation-card"]').should('exist');
   });
 });

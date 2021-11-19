@@ -13,7 +13,7 @@ function Perfil() {
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
-      <h3 data-testid="profile-email">{ JSON.parse(mail).email }</h3>
+      <h3 data-testid="profile-email">{ mail && JSON.parse(mail).email }</h3>
       <Link to="/receitas-feitas">
         <button type="button" data-testid="profile-done-btn">Receitas Feitas</button>
       </Link>

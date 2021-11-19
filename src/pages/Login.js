@@ -28,6 +28,18 @@ function Login() {
     };
     localStorage.setItem('user', JSON.stringify(user));
     setUserEmail(email);
+
+    const inProgressRecipes = {
+      cocktails: {},
+      meals: {},
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+
+    const doneRecipes = [];
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+
+    const favoriteRecipes = [];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
     history.push('/comidas');
   }
 
