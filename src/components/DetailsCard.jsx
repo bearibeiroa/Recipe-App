@@ -48,7 +48,7 @@ DetailsCard.propTypes = {
   strMealThumb: PropTypes.string,
   strMeal: PropTypes.string,
   strCategory: PropTypes.string,
-  filterIngredients: PropTypes.arrayOf(PropTypes.any),
+  filterIngredients: PropTypes.func,
   strInstructions: PropTypes.string,
 };
 

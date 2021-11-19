@@ -31,20 +31,8 @@ function ProgressoComidas() {
   };
   inProgressRecipes();
 
-  const checkedItemLS = () => {
-    const ingredientItem = document.querySelectorAll('.checkedItem');
-    ingredientItem.forEach((item) => {
-      inProgressLS.meals[id].forEach((ingr) => {
-        if (item.value === ingr) {
-          item.checked = true;
-        }
-      });
-    });
-  };
-
   useEffect(() => {
     fecthWithId();
-    checkedItemLS();
   }, []);
 
   function filterIngredients() {
@@ -60,6 +48,7 @@ function ProgressoComidas() {
             index={ index }
             ingredient={ apiResult[ingredient] }
             measure={ apiResult[filteredMeasure[index]] }
+            className="checkedItem"
           />
         </span>
       )

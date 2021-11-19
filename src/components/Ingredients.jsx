@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 function Ingredients({ measure, index, ingredient }) {
@@ -10,7 +10,6 @@ function Ingredients({ measure, index, ingredient }) {
     const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const ingredientItem = event.target.value;
     const mealsKey = inProgressLS.meals[id];
-    event.target.checked = true;
     setIsChecked(!isChecked);
     if (event.target.checked && mealsKey.length > 0) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
@@ -31,17 +30,27 @@ function Ingredients({ measure, index, ingredient }) {
     }
   };
 
+  const checkedItemLS = () => {
+    const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const checkCheckedItem = inProgressLS.meals[id].some((item) => item === ingredient);
+
+    return checkCheckedItem && setIsChecked(true);
+  };
+
+  useEffect(() => {
+    checkedItemLS();
+  }, []);
+
   return (
     <li
-      data-testid={ `${index}-ingredient-step` }
       className={ isChecked ? 'strike' : '' }
+      data-testid={ `${index}-ingredient-step` }
     >
       <input
         type="checkbox"
         value={ ingredient }
         onChange={ (event) => saveInProgress(event) }
-        className="checkedItem"
-        checked={ isChecked }
+        // checked={ isChecked }
       />
       {`${ingredient} - ${measure || 'to taste'}`}
     </li>
