@@ -7,7 +7,9 @@ import shareSymbol from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
-function RecipeDetails({ data: apiResult, createLocalStorage }) {
+function RecipeDetails(
+  { strMealThumb, strMeal, strCategory, strInstructions, createLocalStorage, apiResult },
+) {
   const history = useHistory();
   const { id } = useParams();
   const [copied, setCopied] = useState(false);
@@ -59,56 +61,18 @@ function RecipeDetails({ data: apiResult, createLocalStorage }) {
       setFav(true);
     }
   }
-
-  if (history.location.pathname.includes('/comidas')) {
-    return (
-      <section>
-        <img
-          data-testid="recipe-photo"
-          src={ `${apiResult.strMealThumb}` }
-          alt="Imagem da receita"
-          width="300"
-        />
-        <h1 data-testid="recipe-title">{ `${apiResult.strMeal}`}</h1>
-        <button data-testid="share-btn" onClick={ copyLink } type="button">
-          <img src={ shareSymbol } alt="Icone de favoritar" />
-        </button>
-        <button type="button" onClick={ favRecipe }>
-          { fav ? (
-            <img
-              data-testid="favorite-btn"
-              src={ filledHeart }
-              alt="Icone de favoritar"
-            />)
-            : (
-              <img
-                data-testid="favorite-btn"
-                src={ emptyHeart }
-                alt="Icone de favoritar"
-              />) }
-        </button>
-        { copied && <p><i>Link copiado!</i></p> }
-        <h5 data-testid="recipe-category">{ `${apiResult.strCategory}`}</h5>
-        <h5>Ingredients</h5>
-        <ul>{ filterIngredients() }</ul>
-        <h5>Instructions</h5>
-        <p data-testid="instructions">
-          {' '}
-          {`${apiResult.strInstructions}`}
-        </p>
-      </section>
-    );
-  }
   return (
     <section>
       <img
         data-testid="recipe-photo"
-        src={ `${apiResult.strDrinkThumb}` }
+        src={ `${strMealThumb}` }
         alt="Imagem da receita"
         width="300"
       />
-      <h1 data-testid="recipe-title">{ `${apiResult.strDrink}`}</h1>
-      <button data-testid="share-btn" onClick={ copyLink } type="button">Share</button>
+      <h1 data-testid="recipe-title">{ `${strMeal}`}</h1>
+      <button data-testid="share-btn" onClick={ copyLink } type="button">
+        <img src={ shareSymbol } alt="Icone de favoritar" />
+      </button>
       <button type="button" onClick={ favRecipe }>
         { fav ? (
           <img
@@ -123,23 +87,33 @@ function RecipeDetails({ data: apiResult, createLocalStorage }) {
               alt="Icone de favoritar"
             />) }
       </button>
-      <h5 data-testid="recipe-category">{ `${apiResult.strAlcoholic}`}</h5>
+      { copied && <p><i>Link copiado!</i></p> }
+      <h5 data-testid="recipe-category">{ `${strCategory}`}</h5>
       <h5>Ingredients</h5>
       <ul>{ filterIngredients() }</ul>
       <h5>Instructions</h5>
       <p data-testid="instructions">
         {' '}
-        {`${apiResult.strInstructions}`}
+        {`${strInstructions}`}
       </p>
     </section>
   );
 }
 
+RecipeDetails.defaultProps = {
+  strMealThumb: '',
+  strMeal: '',
+  strCategory: '',
+  strInstructions: '',
+};
+
 RecipeDetails.propTypes = {
-  data: PropTypes.shape({
-    apiResult: PropTypes.objectOf(PropTypes.string),
-  }).isRequired,
+  strMealThumb: PropTypes.string,
+  strMeal: PropTypes.string,
+  strCategory: PropTypes.string,
+  strInstructions: PropTypes.string,
   createLocalStorage: PropTypes.func.isRequired,
+  apiResult: PropTypes.shape().isRequired,
 };
 
 export default RecipeDetails;

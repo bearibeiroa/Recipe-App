@@ -91,7 +91,11 @@ function ReceitaComidas() {
     <main>
       { apiResult && (
         <RecipeDetails
-          data={ apiResult }
+          apiResult={ apiResult }
+          strMealThumb={ apiResult.strMealThumb }
+          strMeal={ apiResult.strMeal }
+          strCategory={ apiResult.strCategory }
+          strInstructions={ apiResult.strInstructions }
           createLocalStorage={ createLocalStorage }
         />) }
       <VideoCard data={ apiResult } />

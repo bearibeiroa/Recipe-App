@@ -90,7 +90,14 @@ function ReceitaBebidas() {
   return (
     <main>
       { apiResult && (
-        <RecipeDetails data={ apiResult } createLocalStorage={ createLocalStorage } />)}
+        <RecipeDetails
+          apiResult={ apiResult }
+          strMealThumb={ apiResult.strDrinkThumb }
+          strMeal={ apiResult.strDrink }
+          strCategory={ apiResult.strAlcoholic }
+          strInstructions={ apiResult.strInstructions }
+          createLocalStorage={ createLocalStorage }
+        />)}
       <RecomendationCard />
       { hideStartButton() && (
         <button
