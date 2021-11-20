@@ -55,6 +55,7 @@ function ProgressoComidas() {
     ));
   }
 
+<<<<<<< HEAD
   function createLocalStorage() {
     const favLS = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const favoriteRecipes = [...favLS, {
@@ -68,6 +69,18 @@ function ProgressoComidas() {
     }];
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   }
+=======
+  const enableButton = () => {
+    const ingredients = Object.keys(apiResult);
+    const ingredientKeys = ingredients.filter((key) => key.includes('strIngredient'));
+    const filteredKeys = ingredientKeys.filter((key) => apiResult[key] !== (null));
+    const LSData = JSON.parse(localStorage.getItem('inProgressRecipes')).meals[id];
+    if (LSData.length === filteredKeys.length) {
+      return false;
+    }
+    return true;
+  };
+>>>>>>> d1619a280f6291f8a06fa60746168b524d4a12a7
 
   return (
     <>
@@ -83,6 +96,7 @@ function ProgressoComidas() {
         type="button"
         className="start-recipe-btn"
         data-testid="finish-recipe-btn"
+        disabled={ enableButton() }
         onClick={ () => history.push('/receitas-feitas') }
       >
         Finalizar Receita
