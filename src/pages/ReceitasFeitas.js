@@ -7,7 +7,7 @@ function ReceitasFeitas() {
   return (
     <>
       <Header title={ title } haveSearch={ haveSearch } />
-      <h1>Página não encontrada :(</h1>
+      <h1>Starting...</h1>
     </>
   );
 }
