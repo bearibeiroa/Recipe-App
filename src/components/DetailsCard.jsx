@@ -89,7 +89,6 @@ function DetailsCard({
         {' '}
         {strInstructions}
       </p>
-
     </>
   );
 }

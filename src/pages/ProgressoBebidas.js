@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router';
 import DetailsCard from '../components/DetailsCard';
 import '../App.css';
-import Ingredients from '../components/Ingredients';
+import DrinksIngredientList from '../components/DrinksIngredientList';
 
 function ProgressoComidas() {
   const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const [apiResult, setApiResult] = useState([]);
+  const [doneIng, setDoneIng] = useState(0);
+  const [shouldEnable, setShouldEnable] = useState(true);
   const { id } = useParams();
   const history = useHistory();
 
@@ -20,8 +21,8 @@ function ProgressoComidas() {
   const inProgressRecipes = () => {
     if (!inProgressLS) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
-        meals: { [id]: [] },
-        cocktails: {},
+        cocktails: { [id]: [] },
+        meals: {},
       }));
     } else {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
@@ -31,9 +32,23 @@ function ProgressoComidas() {
   };
   inProgressRecipes();
 
+  function enableButton() {
+    const currentLS = JSON.parse(localStorage.getItem('inProgressRecipes')).cocktails[id];
+    if (doneIng === currentLS.length) {
+      setShouldEnable(false);
+    } else {
+      setShouldEnable(true);
+    }
+  }
+
   useEffect(() => {
+    enableButton();
     fecthWithId();
   }, []);
+
+  useEffect(() => {
+    enableButton();
+  });
 
   function filterIngredients() {
     const ingredients = Object.keys(apiResult);
@@ -44,10 +59,12 @@ function ProgressoComidas() {
     return filteredKeys.map((ingredient, index) => (
       apiResult[ingredient] && (
         <span key={ index }>
-          <Ingredients
+          <DrinksIngredientList
             index={ index }
             ingredient={ apiResult[ingredient] }
             measure={ apiResult[filteredMeasure[index]] }
+            setDoneIng={ setDoneIng }
+            enableButton={ enableButton }
           />
         </span>
       )
@@ -69,7 +86,7 @@ function ProgressoComidas() {
   }
 
   return (
-    <>
+    <main>
       <DetailsCard
         strMealThumb={ apiResult.strDrinkThumb }
         strMeal={ apiResult.strDrink }
@@ -82,11 +99,12 @@ function ProgressoComidas() {
         type="button"
         className="start-recipe-btn"
         data-testid="finish-recipe-btn"
+        disabled={ shouldEnable }
         onClick={ () => history.push('/receitas-feitas') }
       >
         Finalizar Receita
       </button>
-    </>
+    </main>
   );
 }
 

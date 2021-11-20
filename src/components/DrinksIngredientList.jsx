@@ -2,31 +2,30 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-function Ingredients({ measure, index, ingredient }) {
+function DrinksIngredientList({ measure, index, ingredient, setDoneIng, enableButton }) {
   const [isChecked, setIsChecked] = useState(false);
   const { id } = useParams();
 
   const saveInProgress = ({ target }) => {
     const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const ingredientItem = target.value;
-    console.log(ingredientItem);
-    const mealsIng = inProgressLS.meals[id];
+    const mealsIng = inProgressLS.cocktails[id];
     setIsChecked(!isChecked);
     if (target.checked && mealsIng.length > 0) {
       target.setAttribute('checked', true);
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...inProgressLS,
-        meals: {
-          ...inProgressLS.meals,
-          [id]: [...inProgressLS.meals[id], ingredientItem],
+        cocktails: {
+          ...inProgressLS.cocktails,
+          [id]: [...inProgressLS.cocktails[id], ingredientItem],
         },
       }));
     } else if (target.checked) {
       target.setAttribute('checked', true);
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...inProgressLS,
-        meals: {
-          ...inProgressLS.meals,
+        cocktails: {
+          ...inProgressLS.cocktails,
           [id]: [ingredientItem],
         },
       }));
@@ -35,8 +34,8 @@ function Ingredients({ measure, index, ingredient }) {
       const filteredMealsIng = mealsIng.filter((ing) => ing !== target.value);
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...inProgressLS,
-        meals: {
-          ...inProgressLS.meals,
+        cocktails: {
+          ...inProgressLS.cocktails,
           [id]: [...filteredMealsIng],
         },
       }));
@@ -45,17 +44,24 @@ function Ingredients({ measure, index, ingredient }) {
 
   const checkedItemLS = () => {
     const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const checkCheckedItem = inProgressLS.meals[id].filter((item) => item === ingredient);
     const checkboxes = document.querySelectorAll('.checkbox');
-    const keys = Object.keys(checkboxes);
-    keys.forEach((key) => {
-      checkCheckedItem.forEach((item) => {
-        if (checkboxes[key].value === item) {
-          setIsChecked(!isChecked);
-          checkboxes[key].setAttribute('checked', true);
-        }
+    if (inProgressLS.cocktails[id] && checkboxes.length > 0) {
+      const checkCheckedItem = inProgressLS.cocktails[id];
+      console.log(checkCheckedItem);
+      const filtered = checkCheckedItem.filter(
+        (item) => item === ingredient,
+      );
+      setDoneIng(checkboxes.length);
+      const keys = Object.keys(checkboxes);
+      keys.forEach((key) => {
+        filtered.forEach((item) => {
+          if (checkboxes[key].value === item) {
+            setIsChecked(!isChecked);
+            checkboxes[key].setAttribute('checked', true);
+          }
+        });
       });
-    });
+    }
   };
 
   useEffect(() => {
@@ -74,7 +80,10 @@ function Ingredients({ measure, index, ingredient }) {
           className="checkbox"
           name={ ingredient }
           value={ ingredient }
-          onChange={ (event) => saveInProgress(event) }
+          onChange={ (event) => {
+            saveInProgress(event);
+            enableButton();
+          } }
           checked={ isChecked }
         />
         {`${ingredient} - ${measure || 'to taste'}`}
@@ -84,10 +93,16 @@ function Ingredients({ measure, index, ingredient }) {
   );
 }
 
-Ingredients.propTypes = {
-  index: PropTypes.number.isRequired,
-  ingredient: PropTypes.string.isRequired,
-  measure: PropTypes.string.isRequired,
+DrinksIngredientList.defaultProps = {
+  measure: '',
 };
 
-export default Ingredients;
+DrinksIngredientList.propTypes = {
+  index: PropTypes.number.isRequired,
+  ingredient: PropTypes.string.isRequired,
+  measure: PropTypes.string,
+  setDoneIng: PropTypes.func.isRequired,
+  enableButton: PropTypes.func.isRequired,
+};
+
+export default DrinksIngredientList;

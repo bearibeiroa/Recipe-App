@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router';
 import DetailsCard from '../components/DetailsCard';
 import '../App.css';
-import Ingredients from '../components/Ingredients';
+import MealsIngredientList from '../components/MealsIngredientList';
 
 function ProgressoComidas() {
   const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const [apiResult, setApiResult] = useState([]);
+  const [doneIng, setDoneIng] = useState(0);
+  const [shouldEnable, setShouldEnable] = useState(true);
   const { id } = useParams();
   const history = useHistory();
 
@@ -31,9 +32,22 @@ function ProgressoComidas() {
   };
   inProgressRecipes();
 
+  function enableButton() {
+    const currentLS = JSON.parse(localStorage.getItem('inProgressRecipes')).meals[id];
+    if (currentLS.length > 0 && doneIng === currentLS.length) {
+      setShouldEnable(false);
+    } else {
+      setShouldEnable(true);
+    }
+  }
+
   useEffect(() => {
     fecthWithId();
   }, []);
+
+  useEffect(() => {
+    enableButton();
+  });
 
   function filterIngredients() {
     const ingredients = Object.keys(apiResult);
@@ -44,11 +58,12 @@ function ProgressoComidas() {
     return filteredKeys.map((ingredient, index) => (
       apiResult[ingredient] && (
         <span key={ index }>
-          <Ingredients
+          <MealsIngredientList
             index={ index }
             ingredient={ apiResult[ingredient] }
             measure={ apiResult[filteredMeasure[index]] }
-            className="checkedItem"
+            setDoneIng={ setDoneIng }
+            enableButton={ enableButton }
           />
         </span>
       )
@@ -70,7 +85,7 @@ function ProgressoComidas() {
   }
 
   return (
-    <>
+    <main>
       <DetailsCard
         strMealThumb={ apiResult.strMealThumb }
         strMeal={ apiResult.strMeal }
@@ -83,11 +98,12 @@ function ProgressoComidas() {
         type="button"
         className="start-recipe-btn"
         data-testid="finish-recipe-btn"
+        disabled={ shouldEnable }
         onClick={ () => history.push('/receitas-feitas') }
       >
         Finalizar Receita
       </button>
-    </>
+    </main>
   );
 }
 
