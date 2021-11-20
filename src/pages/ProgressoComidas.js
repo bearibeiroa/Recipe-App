@@ -55,6 +55,20 @@ function ProgressoComidas() {
     ));
   }
 
+  function createLocalStorage() {
+    const favLS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoriteRecipes = [...favLS, {
+      id,
+      type: 'comida',
+      area: apiResult.strArea,
+      category: apiResult.strCategory,
+      alcoholicOrNot: '',
+      name: apiResult.strMeal,
+      image: apiResult.strMealThumb,
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }
+
   return (
     <>
       <DetailsCard
@@ -63,6 +77,7 @@ function ProgressoComidas() {
         strCategory={ apiResult.strCategory }
         strInstructions={ apiResult.strInstructions }
         filterIngredients={ filterIngredients }
+        createLocalStorage={ createLocalStorage }
       />
       <button
         type="button"

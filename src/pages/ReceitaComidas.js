@@ -77,11 +77,6 @@ function ReceitaComidas() {
   }, []);
 
   function handleClick() {
-    // const fetchKeys = Object.keys(apiResult);
-    // const ingredientKeys = fetchKeys.filter((key) => key.includes('strIngredient'));
-    // const filteredKeys = ingredientKeys.filter((key) => apiResult[key] !== (''));
-
-    // const mapIngredients = filteredKeys.map((ingredient) => apiResult[ingredient]);
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...inProgressLS,
       meals: {

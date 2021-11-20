@@ -10,6 +10,7 @@ const copy = require('clipboard-copy');
 function RecipeDetails({ data: apiResult, createLocalStorage }) {
   const history = useHistory();
   const { id } = useParams();
+  const [copied, setCopied] = useState(false);
   const [fav, setFav] = useState(false);
 
   function filterIngredients() {
@@ -44,7 +45,7 @@ function RecipeDetails({ data: apiResult, createLocalStorage }) {
 
   function copyLink() {
     copy(`http://localhost:3000${history.location.pathname}`);
-    global.alert('Link copiado!');
+    setCopied(true);
   }
 
   function favRecipe() {
@@ -86,6 +87,7 @@ function RecipeDetails({ data: apiResult, createLocalStorage }) {
                 alt="Icone de favoritar"
               />) }
         </button>
+        { copied && <p><i>Link copiado!</i></p> }
         <h5 data-testid="recipe-category">{ `${apiResult.strCategory}`}</h5>
         <h5>Ingredients</h5>
         <ul>{ filterIngredients() }</ul>

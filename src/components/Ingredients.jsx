@@ -6,12 +6,14 @@ function Ingredients({ measure, index, ingredient }) {
   const [isChecked, setIsChecked] = useState(false);
   const { id } = useParams();
 
-  const saveInProgress = (event) => {
+  const saveInProgress = ({ target }) => {
     const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const ingredientItem = event.target.value;
-    const mealsKey = inProgressLS.meals[id];
+    const ingredientItem = target.value;
+    console.log(ingredientItem);
+    const mealsIng = inProgressLS.meals[id];
     setIsChecked(!isChecked);
-    if (event.target.checked && mealsKey.length > 0) {
+    if (target.checked && mealsIng.length > 0) {
+      target.setAttribute('checked', true);
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...inProgressLS,
         meals: {
@@ -19,7 +21,8 @@ function Ingredients({ measure, index, ingredient }) {
           [id]: [...inProgressLS.meals[id], ingredientItem],
         },
       }));
-    } else if (event.target.checked) {
+    } else if (target.checked) {
+      target.setAttribute('checked', true);
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...inProgressLS,
         meals: {
@@ -27,14 +30,32 @@ function Ingredients({ measure, index, ingredient }) {
           [id]: [ingredientItem],
         },
       }));
+    } else if (!target.checked) {
+      target.setAttribute('checked', false);
+      const filteredMealsIng = mealsIng.filter((ing) => ing !== target.value);
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...inProgressLS,
+        meals: {
+          ...inProgressLS.meals,
+          [id]: [...filteredMealsIng],
+        },
+      }));
     }
   };
 
   const checkedItemLS = () => {
     const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const checkCheckedItem = inProgressLS.meals[id].some((item) => item === ingredient);
-
-    return checkCheckedItem && setIsChecked(true);
+    const checkCheckedItem = inProgressLS.meals[id].filter((item) => item === ingredient);
+    const checkboxes = document.querySelectorAll('.checkbox');
+    const keys = Object.keys(checkboxes);
+    keys.forEach((key) => {
+      checkCheckedItem.forEach((item) => {
+        if (checkboxes[key].value === item) {
+          setIsChecked(!isChecked);
+          checkboxes[key].setAttribute('checked', true);
+        }
+      });
+    });
   };
 
   useEffect(() => {
@@ -42,18 +63,24 @@ function Ingredients({ measure, index, ingredient }) {
   }, []);
 
   return (
-    <li
-      className={ isChecked ? 'strike' : '' }
-      data-testid={ `${index}-ingredient-step` }
-    >
-      <input
-        type="checkbox"
-        value={ ingredient }
-        onChange={ (event) => saveInProgress(event) }
-        // checked={ isChecked }
-      />
-      {`${ingredient} - ${measure || 'to taste'}`}
-    </li>
+    <div>
+      <label
+        className={ isChecked ? 'strike' : '' }
+        data-testid={ `${index}-ingredient-step` }
+        htmlFor={ ingredient }
+      >
+        <input
+          type="checkbox"
+          className="checkbox"
+          name={ ingredient }
+          value={ ingredient }
+          onChange={ (event) => saveInProgress(event) }
+          checked={ isChecked }
+        />
+        {`${ingredient} - ${measure || 'to taste'}`}
+      </label>
+
+    </div>
   );
 }
 
