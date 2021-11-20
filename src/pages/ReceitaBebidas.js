@@ -77,16 +77,11 @@ function ReceitaBebidas() {
   }, []);
 
   function handleClick() {
-    const fetchKeys = Object.keys(apiResult);
-    const ingredientKeys = fetchKeys.filter((key) => key.includes('strIngredient'));
-    const filteredKeys = ingredientKeys.filter((key) => apiResult[key] !== (null));
-    console.log(filteredKeys);
-    const mapIngredients = filteredKeys.map((ingredient) => apiResult[ingredient]);
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...inProgressLS,
       cocktails: {
         ...inProgressLS.cocktails,
-        [id]: mapIngredients,
+        [id]: [],
       },
     }));
     history.push(`/bebidas/${id}/in-progress`);
@@ -95,7 +90,14 @@ function ReceitaBebidas() {
   return (
     <main>
       { apiResult && (
-        <RecipeDetails data={ apiResult } createLocalStorage={ createLocalStorage } />)}
+        <RecipeDetails
+          apiResult={ apiResult }
+          strMealThumb={ apiResult.strDrinkThumb }
+          strMeal={ apiResult.strDrink }
+          strCategory={ apiResult.strAlcoholic }
+          strInstructions={ apiResult.strInstructions }
+          createLocalStorage={ createLocalStorage }
+        />)}
       <RecomendationCard />
       { hideStartButton() && (
         <button

@@ -77,16 +77,11 @@ function ReceitaComidas() {
   }, []);
 
   function handleClick() {
-    const fetchKeys = Object.keys(apiResult);
-    const ingredientKeys = fetchKeys.filter((key) => key.includes('strIngredient'));
-    const filteredKeys = ingredientKeys.filter((key) => apiResult[key] !== (''));
-
-    const mapIngredients = filteredKeys.map((ingredient) => apiResult[ingredient]);
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...inProgressLS,
       meals: {
         ...inProgressLS.meals,
-        [id]: mapIngredients,
+        [id]: [],
       },
     }));
     history.push(`/comidas/${id}/in-progress`);
@@ -96,7 +91,11 @@ function ReceitaComidas() {
     <main>
       { apiResult && (
         <RecipeDetails
-          data={ apiResult }
+          apiResult={ apiResult }
+          strMealThumb={ apiResult.strMealThumb }
+          strMeal={ apiResult.strMeal }
+          strCategory={ apiResult.strCategory }
+          strInstructions={ apiResult.strInstructions }
           createLocalStorage={ createLocalStorage }
         />) }
       <VideoCard data={ apiResult } />
