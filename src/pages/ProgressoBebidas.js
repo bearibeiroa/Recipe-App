@@ -85,6 +85,58 @@ function ProgressoComidas() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   }
 
+  // Função para formatar data: https://blog.betrybe.com/javascript/javascript-date-format/
+  function adicionaZero(numero) {
+    const NINE = 9;
+    if (numero <= NINE) return `0${numero}`;
+    return numero;
+  }
+
+  function todayDate() {
+    const dataAtual = new Date();
+    const dataAtualFormatada = (
+      `${adicionaZero(dataAtual.getDate().toString())}/${adicionaZero(
+        dataAtual.getMonth() + 1,
+      ).toString()}/${dataAtual.getFullYear()}`
+    );
+    return dataAtualFormatada;
+  }
+
+  function handleClick() {
+    const PATH = '/receitas-feitas';
+    const doneLS = JSON.parse(localStorage.getItem('doneRecipes'));
+    const tagsArr = (apiResult.strTags && apiResult.strTags.split(',')) || [];
+    if (!doneLS) {
+      const doneRecipes = [{
+        id,
+        type: 'bebida',
+        category: apiResult.strCategory,
+        alcoholicOrNot: apiResult.strAlcoholic,
+        name: apiResult.strDrink,
+        image: apiResult.strDrinkThumb,
+        doneDate: todayDate(),
+        tags: tagsArr,
+      }];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+      history.push(PATH);
+    } else if (doneLS.some((recipe) => recipe.id === id)) {
+      history.push(PATH);
+    } else {
+      const doneRecipes = [...doneLS, {
+        id,
+        type: 'bebida',
+        category: apiResult.strCategory,
+        alcoholicOrNot: apiResult.strAlcoholic,
+        name: apiResult.strDrink,
+        image: apiResult.strDrinkThumb,
+        doneDate: todayDate(),
+        tags: tagsArr,
+      }];
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+      history.push(PATH);
+    }
+  }
+
   return (
     <main>
       <DetailsCard
@@ -100,7 +152,7 @@ function ProgressoComidas() {
         className="start-recipe-btn"
         data-testid="finish-recipe-btn"
         disabled={ shouldEnable }
-        onClick={ () => history.push('/receitas-feitas') }
+        onClick={ handleClick }
       >
         Finalizar Receita
       </button>
