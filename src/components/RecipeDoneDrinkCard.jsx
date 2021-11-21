@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
-function RecipeDoneDrinkCard({ thumb, alcoholic, title, date, tags, index }) {
+const copy = require('clipboard-copy');
+
+function RecipeDoneDrinkCard({ thumb, alcoholic, title, date, tags, index, id }) {
+  const [copied, setCopied] = useState(false);
+  function copyLink() {
+    const url = (`http://localhost:3000/bebidas/${id}`);
+    copy(url);
+    setCopied(true);
+  }
   return (
     <section>
-      <img
-        src={ thumb }
-        alt="Imagem da receita"
-        height="200px"
-        data-testid={ `${index}-horizontal-image` }
-      />
+      <Link to={ `/bebidas/${id}` }>
+        <img
+          src={ thumb }
+          alt="Imagem da receita"
+          height="200px"
+          data-testid={ `${index}-horizontal-image` }
+        />
+      </Link>
       <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholic }</p>
-      <h5 data-testid={ `${index}-horizontal-name` }>{ title }</h5>
+      <Link to={ `/bebidas/${id}` }>
+        <h5 data-testid={ `${index}-horizontal-name` }>{ title }</h5>
+      </Link>
       <p data-testid={ `${index}-horizontal-done-date` }>
         Done in:
         { ' ' }
@@ -23,13 +36,14 @@ function RecipeDoneDrinkCard({ thumb, alcoholic, title, date, tags, index }) {
           { tag }
         </p>
       ))}
-      <button type="button">
+      <button type="button" onClick={ copyLink }>
         <img
           data-testid={ `${index}-horizontal-share-btn` }
           src={ shareIcon }
           alt="icone de compartilhar"
         />
       </button>
+      { copied && <p>Link copiado!</p> }
     </section>
   );
 }
@@ -41,6 +55,7 @@ RecipeDoneDrinkCard.propTypes = {
   tags: PropTypes.shape().isRequired,
   index: PropTypes.number.isRequired,
   thumb: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default RecipeDoneDrinkCard;
