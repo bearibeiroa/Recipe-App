@@ -23,8 +23,12 @@ function RecipeDoneDrinkCard({ thumb, alcoholic, title, date, tags, index }) {
           { tag }
         </p>
       ))}
-      <button type="button" data-testid={ `${index}-horizontal-share-btn` }>
-        <img src={ shareIcon } alt="icone de compartilhar" />
+      <button type="button">
+        <img
+          data-testid={ `${index}-horizontal-share-btn` }
+          src={ shareIcon }
+          alt="icone de compartilhar"
+        />
       </button>
     </section>
   );
