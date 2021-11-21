@@ -28,7 +28,7 @@ function ReceitasFeitas() {
   }
 
   function mapDoneRecipes() {
-    return recipes.map((recipe, index) => {
+    return recipesLS && recipes.map((recipe, index) => {
       if (recipe.type === 'comida') {
         return (
           <RecipeDoneFoodCard
