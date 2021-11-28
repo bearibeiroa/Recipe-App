@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { Container, Form, Image } from 'react-bootstrap';
 import { useHistory } from 'react-router';
+import logo from '../assets/images/logo.png';
 import AppContext from '../context/AppContext';
 
 function Login() {
@@ -44,28 +46,37 @@ function Login() {
   }
 
   return (
-    <form>
-      <input
-        data-testid="email-input"
-        type="email"
-        value={ email }
-        onChange={ (ev) => setEmail(ev.target.value) }
-      />
-      <input
-        data-testid="password-input"
-        type="password"
-        value={ password }
-        onChange={ (ev) => setPassword(ev.target.value) }
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ !enableButton() }
-        onClick={ handleClick }
-      >
-        Entrar
-      </button>
-    </form>
+    <Container fluid className="d-flex justify-content-center align-items-center mx-auto">
+      <Form className=" rounded p-4 p-sm-5">
+        <Image src={ logo } className="mx-auto d-block" />
+        <h4 className="text-center">Login</h4>
+        <div className="form-group">
+          <input
+            data-testid="email-input"
+            type="email"
+            value={ email }
+            onChange={ (ev) => setEmail(ev.target.value) }
+          />
+        </div>
+        <div className="form-group">
+          <input
+            data-testid="password-input"
+            type="password"
+            value={ password }
+            onChange={ (ev) => setPassword(ev.target.value) }
+          />
+        </div>
+        <button
+          className="btn btn-primary btn-block"
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ !enableButton() }
+          onClick={ handleClick }
+        >
+          Entrar
+        </button>
+      </Form>
+    </Container>
   );
 }
 

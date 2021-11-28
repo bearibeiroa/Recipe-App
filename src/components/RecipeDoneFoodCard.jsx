@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import shareIcon from '../images/shareIcon.svg';
+import shareIcon from '../assets/images/icons/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
