@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Container, Form, Image } from 'react-bootstrap';
 import { useHistory } from 'react-router';
-import logo from '../assets/logo.png';
+import logo from '../assets/images/logo.png';
 import AppContext from '../context/AppContext';
 
 function Login() {

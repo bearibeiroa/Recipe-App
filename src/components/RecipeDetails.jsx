@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router';
-import emptyHeart from '../images/whiteHeartIcon.svg';
-import filledHeart from '../images/blackHeartIcon.svg';
-import shareSymbol from '../images/shareIcon.svg';
+import emptyHeart from '../assets/images/icons/whiteHeartIcon.svg';
+import filledHeart from '../assets/images/icons/blackHeartIcon.svg';
+import shareSymbol from '../assets/images/icons/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 

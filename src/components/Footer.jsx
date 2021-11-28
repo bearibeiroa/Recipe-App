@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import drinkIcon from '../images/drinkIcon.svg';
-import exploreIcon from '../images/exploreIcon.svg';
-import mealIcon from '../images/mealIcon.svg';
+import drinkIcon from '../assets/images/icons/drinkIcon.svg';
+import exploreIcon from '../assets/images/icons/exploreIcon.svg';
+import mealIcon from '../assets/images/icons/mealIcon.svg';
 import '../App.css';
 
 function Footer() {
