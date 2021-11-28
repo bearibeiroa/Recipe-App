@@ -1,17 +1,3 @@
-### Termos de uso
-
-Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.
-
----
-
-# Boas vindas ao repositório do projeto de Receitas!
-
-Você já usa o GitHub diariamente para desenvolver os exercícios, certo? Agora, para desenvolver os projetos, você deverá seguir as instruções a seguir. Fique atento a cada passo, e se tiver qualquer dúvida, nos envie por _Slack_! #vqv 🚀
-
-Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir desse repositório, utilizando uma branch específica e um _Pull Request_ para colocar seus códigos.
-
----
-
 # Sumário
 
 - [Habilidades](#habilidades)
@@ -41,13 +27,13 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
     - [Biblioteca clipboard-copy](#biblioteca-clipboard-copy)
     - [Biblioteca Bootstrap (opcional)](#biblioteca-bootstrap-opcional)
   - [Lista de requisitos](#lista-de-requisitos)
-  
+
   <details>
     <summary>Testes unitários</summary>
 
     - [1 - Desenvolva os testes unitários de maneira que a seja de, no mínimo, 90%](#1---desenvolva-os-testes-unitários-de-maneira-que-a-seja-de-no-mínimo-90)
   </details>
-  
+
   <details>
     <summary>Tela de Login</summary>
 
@@ -864,7 +850,7 @@ Todas as [rotas](#rotas) serão verificadas. Os ícones podem ser encontrados em
 ### 12 - Desenvolva o botão de busca que, ao ser clicado, a barra de busca deve aparecer. O mesmo serve para escondê-la
 
   * O input de busca deve possuir o atributo `data-testid="search-input"`
-  
+
   O que será verificado:
   ```
   - Ao clicar no botão de busca pela primeira vez a barra de busca aparece
@@ -1106,7 +1092,7 @@ As categorias disponíveis devem ser obtidas através da API de [comidas](https:
   - Caso as receitas sejam de bebida e a categoria seja "Other/Unknown", deve-se carregar as 12 primeiras receitas de "Other/Unknown"
   - Caso as receitas sejam de bebida e a categoria seja "Cocoa", deve-se carregar as 12 primeiras receitas de "Cocoa"
   ```
-  
+
 **Atenção:** Caso a categoria retorne apenas um resultado, **NÃO** deve redirecionar para a página de detalhes.
 
 ### 29 - Implemente o filtro como um toggle, que se for selecionado de novo, o app deve retornar as receitas sem nenhum filtro
@@ -1690,14 +1676,14 @@ A rota `/explorar/bebidas/area` não deve estar disponível, retornando um erro 
     * O botão com as "Receitas Feitas" deve possuir o atributo `data-testid="profile-done-btn"`;
     * O botão com as "Receitas Favoritas" deve possuir o atributo `data-testid="profile-favorite-btn"`;
     * O botão de sair deve possuir o atributo `data-testid="profile-logout-btn"`.
-  
+
   O que será verificado:
   ```
   - Todos o data-testid do email e de todos os botões.
   ```
 
 ### 83 - Implemente a solução de maneira que o e-mail da pessoa usuária deve estar visível
-  
+
   O que será verificado:
   ```
   - O e-mail armazenado em localStorage está visível.
