@@ -1,3 +1,4 @@
+/* stylelint-disable declaration-no-important */
 .meals {
   align-items: center;
   background: #0fa36b;
@@ -8,6 +9,33 @@
   height: 100vh;
   justify-content: center;
   width: 100%;
+}
+
+.btn-primary {
+  background-color: #ff4b2c ! important;
+  border: 1px solid #ff4b2c ! important;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: gray ! important;
+  border: 1px solid gray ! important;
+}
+
+.text-center {
+  margin-bottom: 16px;
+  margin-top: 20px;
+}
+
+form {
+  border: 1px solid gray;}
+
+.d-flex {
+  height: 100vh;
+}
+
+.img-fluid {
+  align-self: center;
+  margin: 0 auto;
 }
 
 .rocksGlass {
